@@ -10,17 +10,18 @@ data/processed/feature_names.json
 data/manifests/dataset_manifest.json
 data/manifests/split_manifest.json
 data/manifests/preprocessing_manifest.json
-?data/manifests/*_manifest.json.sha256
 models/preprocessing/**
 models/v1/**
 models/v2/**
 data/manifests/model_revision_protocol_v1.0.json
-?data/manifests/model_revision_protocol_v1.0.json.sha256
+data/manifests/model_revision_protocol_v1.0.sha256
+?data/manifests/*.sha256
 results/derived/malicious_predictions_strict.csv
 results/derived/pairwise_predictions_strict.csv
 results/derived/static_model_metrics_*.json
 results/derived/model_revision_acceptance.json
 results/derived/dataset_audit.json
+results/derived/phase4_statistical_summary.json
 ?results/derived/*disagreement*
 data/splits/*.csv
 

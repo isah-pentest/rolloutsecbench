@@ -69,6 +69,7 @@ release/collect_environment.sh
 release/build_evidence_archive.py
 release/archive_allowlist.txt
 release/cleanroom_test.sh
+release/set_doi.sh
 
 # ---------------------------------------------------------------- confirmatory campaign (pinned in the freeze manifest)
 workloads/xm_loader.py

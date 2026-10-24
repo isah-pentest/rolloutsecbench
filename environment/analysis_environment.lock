@@ -1,4 +1,4 @@
-]633;E;echo "# Analysis environment of the analysis of record (.venv-blueprint-v2)";107c6ba8-1534-4bf3-945a-feaeb1712308]633;C# Analysis environment of the analysis of record (.venv-blueprint-v2)
+# Analysis environment of the analysis of record (.venv-blueprint-v2)
 # python 3.14.4
 annotated-doc==0.0.5
 annotated-types==0.8.0

@@ -14,8 +14,8 @@ rm -rf _release_kit && mkdir _release_kit && cp -r "$KIT"/. _release_kit/
 FILES="REPRODUCE.md docs/REPRODUCTION_MAP.md docs/IDENTIFIERS.md docs/RELEASE_DECISIONS.md
 environment/published_hashes.sha256 release/build_public_release.py release/allowlist.txt release/denylist.txt
 release/inspect_local_repo.py release/inspect_details.py release/install_kit.sh
-release/export_campaign_k8s.py release/write_kind_config.sh release/check_campaign_files.sh release/verify_container_files.py release/collect_environment.sh release/build_evidence_archive.py release/archive_allowlist.txt release/cleanroom_test.sh
-release/public/README.md release/public/requirements.txt release/public/LICENSE release/public/CITATION.cff
+release/export_campaign_k8s.py release/write_kind_config.sh release/check_campaign_files.sh release/verify_container_files.py release/collect_environment.sh release/build_evidence_archive.py release/archive_allowlist.txt release/cleanroom_test.sh release/set_doi.sh
+release/public/README.md release/public/requirements.txt release/public/LICENSE release/public/CITATION.cff release/public/.gitignore
 tools/verify_release.py tools/reproduce_claims.sh tools/compare_generated.py paper/figures/fig1_architecture.tex"
 for f in $FILES; do
   [[ -f "$KIT/$f" ]] || continue

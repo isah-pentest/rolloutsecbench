@@ -11,6 +11,10 @@ authors:
   - family-names: Shashidhar
     given-names: Narasimha
 license: MIT
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23621512"
+    description: "Evidence archive"
 keywords:
   - machine learning security
   - intrusion detection

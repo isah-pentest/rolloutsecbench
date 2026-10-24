@@ -35,7 +35,7 @@ UNSW-NB15 is distributed by its authors (Moustafa and Slay, MilCIS 2015). It is 
 
 The evidence archive contains the frozen offline artifacts and the request-level evidence of the confirmatory campaign. Unpack it at the repository root; it creates the paths below. Its contents are listed in `ARCHIVE_MANIFEST.sha256` inside the archive.
 
-**Evidence archive:** `<EVIDENCE_ARCHIVE_DOI>` <!-- RELEASE-BLOCKER: replace with the archive DOI -->
+**Evidence archive:** [https://doi.org/10.5281/zenodo.23621512](https://doi.org/10.5281/zenodo.23621512) (`rolloutsecbench-evidence-v1.tar.gz`, SHA-256 `17b61615728b68b27c689b48258a1b78a3d095f14f5fc11a0d8eca8e34dd12ca`)
 
 | Path | Role |
 |---|---|
@@ -49,7 +49,7 @@ The evidence archive contains the frozen offline artifacts and the request-level
 | `paper_inputs/` | The generated LaTeX values and tables the paper was compiled with (`claims_values.tex`, `gate4_values.tex`, `h2_h5_values.tex`, `table_gate4.tex`, `run_accounting.tex`, `latency_table.tex`) |
 | `results/derived/phase9_v3/analysis_20261022T200702Z/` and its reference outputs (`claims/`, `confirmatory/`, `exploratory/`, `tables/`, `figures/`, `full_analysis_run.log`) | The analysis of record and the values printed in the paper, for comparison |
 
-Before step 4, recreate the splits in the training environment (`environment/requirements.lock`): `python training/generate_splits.py`, then unpack `data/manifests/` from the archive again, in case the script rewrote a manifest, and run `python3 tools/verify_release.py --strict`.
+Before step 4, recreate the splits in the training environment (`environment/requirements.lock`). `training/generate_splits.py` refuses to overwrite a frozen artifact, so first move the archived `data/manifests/split_manifest.json` aside. Then run `python training/generate_splits.py`, unpack `data/manifests/` from the archive again so that the archived manifests are back in place, and run `python3 tools/verify_release.py --strict`. The split files must match the hashes in Table S1.
 
 `release/cleanroom_test.sh` runs Sections 2–4 end to end in an empty directory, starting from this repository, the archive and the two official files.
 

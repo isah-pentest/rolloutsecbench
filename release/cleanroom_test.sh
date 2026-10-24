@@ -26,6 +26,13 @@ step "1. fresh copy of the public release"
 cp -a "$PUBLIC" "$WORK"; cd "$WORK"
 [[ -d .git ]] && rm -rf .git
 sha256sum -c --quiet <(grep -v '^#' RELEASE_MANIFEST.sha256) && echo "RELEASE_MANIFEST.sha256: all files OK"
+EXTRA=$(comm -13 <(grep -v '^#' RELEASE_MANIFEST.sha256 | awk '{print $2}' | sort) \
+                 <(find . -type f ! -name RELEASE_MANIFEST.sha256 | sed 's#^\./##' | sort))
+[[ -z "$EXTRA" ]] || { echo "FAIL: files in the release that RELEASE_MANIFEST.sha256 does not list:"; echo "$EXTRA"; exit 1; }
+echo "no files outside RELEASE_MANIFEST.sha256"
+CTRL=$(grep -rlP '[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]' --include='*.txt' --include='*.lock' --include='*.md' --include='*.py' --include='*.sh' --include='*.json' --include='*.yaml' --include='*.cff' . || true)
+[[ -z "$CTRL" ]] || { echo "FAIL: text files containing terminal control characters:"; echo "$CTRL"; exit 1; }
+echo "no control characters in text files"
 
 step "2. official UNSW-NB15 files"
 mkdir -p data/raw; cp "$RAW/UNSW_NB15_training-set.csv" "$RAW/UNSW_NB15_testing-set.csv" data/raw/
@@ -41,10 +48,32 @@ if ls data/splits/*.csv >/dev/null 2>&1; then
   echo "splits supplied by the archive"
 else
   [[ -n "$TPY" ]] || { echo "the archive has no data/splits/: give --train-python (training environment)"; exit 2; }
+  # generate_splits.py refuses to overwrite frozen artifacts: set the archived split manifest aside,
+  # regenerate, keep the regenerated manifest for comparison, then restore every archived manifest.
+  mkdir -p .cleanroom/archived .cleanroom/regenerated
+  if [[ -f data/manifests/split_manifest.json ]]; then mv data/manifests/split_manifest.json .cleanroom/archived/; fi
   "$TPY" training/generate_splits.py
-  echo "regenerated:"; sha256sum data/splits/*.csv
-  # generate_splits.py may rewrite manifests; restore the archived originals
+  echo "regenerated split files:"; sha256sum data/splits/*.csv
+  cp data/manifests/split_manifest.json .cleanroom/regenerated/ 2>/dev/null || true
   tar xzf "$ARCHIVE" data/manifests/
+  if [[ -f .cleanroom/regenerated/split_manifest.json ]]; then
+    if cmp -s .cleanroom/regenerated/split_manifest.json data/manifests/split_manifest.json; then
+      echo "regenerated split_manifest.json is byte-identical to the archived one"
+    else
+      echo "regenerated split_manifest.json differs from the archived one (expected if it records a timestamp); differing keys:"
+      "$PY" - .cleanroom/regenerated/split_manifest.json data/manifests/split_manifest.json <<'PY' || true
+import json, sys
+a, b = (json.load(open(p)) for p in sys.argv[1:3])
+def flat(o, p=""):
+    if isinstance(o, dict):
+        for k, v in o.items(): yield from flat(v, f"{p}.{k}")
+    else: yield p, o
+fa, fb = dict(flat(a)), dict(flat(b))
+for k in sorted(set(fa) | set(fb)):
+    if fa.get(k) != fb.get(k): print(f"  {k}: regenerated={str(fa.get(k))[:70]!r} archived={str(fb.get(k))[:70]!r}")
+PY
+    fi
+  fi
 fi
 
 step "5. tools/verify_release.py --strict"

@@ -1,0 +1,8 @@
+# local state that must never enter the public repository
+__pycache__/
+*.pyc
+.venv*/
+data/raw/
+data/splits/
+results/reproduced/
+*.kitbak
