@@ -37,7 +37,8 @@ from pathlib import Path
 ROOT = Path.cwd()
 LIST = ROOT / "release/archive_allowlist.txt"
 NEVER = ("data/raw/", ".venv", "__pycache__", ".kitbak", ".pyc", ".DS_Store")
-LOCAL = re.compile(rb"/home/[A-Za-z0-9_.-]+|/mnt/c/|[A-Z]:\\\\Users|pentestnet|isah_")
+_USER = re.escape(os.path.basename(os.path.expanduser("~")).encode() or b"~")
+LOCAL = re.compile(rb"/home/[A-Za-z0-9_.-]+|/mnt/c/|[A-Z]:\\\\Users|" + _USER)   # absolute paths or the local user name
 SECRET = re.compile(rb"(?i)(BEGIN [A-Z ]*PRIVATE KEY|aws_secret|api[_-]?key\s*[:=]\s*['\"][A-Za-z0-9]{16}|ghp_[A-Za-z0-9]{30}|password\s*[:=]\s*['\"][^'\"]{4})")
 UNSW = (b"sbytes", b"dbytes", b"sttl", b"dttl", b"sload", b"dload", b"spkts", b"dpkts", b"smean",
         b"dmean", b"ct_srv_src", b"synack", b"ackdat", b"sinpkt")

@@ -8,8 +8,18 @@ url: "https://github.com/isah-pentest/rolloutsecbench"
 authors:
   - family-names: Mohammed
     given-names: Isah
+    affiliation: "Sam Houston State University"
+    orcid: "https://orcid.org/0009-0008-0618-744X"
+  - family-names: Cho
+    given-names: Hyuk
+    affiliation: "Sam Houston State University"
+    orcid: "https://orcid.org/0000-0003-2529-4802"
   - family-names: Shashidhar
     given-names: Narasimha
+    affiliation: "Sam Houston State University"
+    orcid: "https://orcid.org/0000-0002-4877-158X"
+version: "1.0.0"
+date-released: "2026-10-24"
 license: MIT
 identifiers:
   - type: doi

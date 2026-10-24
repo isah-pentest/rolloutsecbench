@@ -70,6 +70,6 @@ The results cover one dataset, one model family, one revision pair, one routing 
 
 ## Licence and citation
 
-The code is released under the MIT License (see [LICENSE](LICENSE)); copyright 2026 Isah Mohammed and Narasimha Shashidhar. To cite the software, use [CITATION.cff](CITATION.cff) (GitHub shows it under "Cite this repository").
+The code is released under the MIT License (see [LICENSE](LICENSE)); copyright 2026 Isah Mohammed, Hyuk Cho and Narasimha Shashidhar. To cite the software, use [CITATION.cff](CITATION.cff) (GitHub shows it under "Cite this repository").
 
 The dataset is subject to the UNSW-NB15 terms of use: free for academic research, while commercial use requires agreement with its authors.
