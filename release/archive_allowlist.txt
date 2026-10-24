@@ -1,0 +1,49 @@
+# RolloutSecBench evidence archive: files taken from the private repository, at the same paths.
+# Glob semantics: * stays inside one directory, ** crosses directories. A line "dest <= source" stores
+# the source file(s) under another directory in the archive. Lines starting with ? are optional.
+# data/raw/ is never archived (UNSW-NB15 is distributed by its authors); data/splits/ only with
+# --include-splits. release/build_evidence_archive.py applies these rules.
+
+# offline artifacts (Tables 1, 2, S1; H1; Figure 2)
+environment/checksums.sha256
+data/processed/feature_names.json
+data/manifests/dataset_manifest.json
+data/manifests/split_manifest.json
+data/manifests/preprocessing_manifest.json
+?data/manifests/*_manifest.json.sha256
+models/preprocessing/**
+models/v1/**
+models/v2/**
+data/manifests/model_revision_protocol_v1.0.json
+?data/manifests/model_revision_protocol_v1.0.json.sha256
+results/derived/malicious_predictions_strict.csv
+results/derived/pairwise_predictions_strict.csv
+results/derived/static_model_metrics_*.json
+results/derived/model_revision_acceptance.json
+results/derived/dataset_audit.json
+?results/derived/*disagreement*
+data/splits/*.csv
+
+# serving equivalence (Phase 5)
+?results/derived/phase5*/**
+?data/manifests/phase5*.json
+
+# confirmatory campaign (Tables 3-7, Figures 3-5)
+data/manifests/phase9_v3/phase9_v3_freeze.json
+data/manifests/phase9_v3/phase9_v3_freeze.json.sha256
+data/manifests/phase9_v3/deviations/**
+?data/manifests/phase9_v3/execution_notes/**
+results/raw/phase9_v3/registry.csv
+?results/raw/phase9_v3/registry.csv.sha256
+results/raw/phase9_v3/V3-*/**
+
+# analysis of record and its reference outputs
+results/derived/phase9_v3/analysis_20261022T200702Z/**
+?results/derived/phase9_v3/claims/**
+?results/derived/phase9_v3/confirmatory/**
+?results/derived/phase9_v3/exploratory/**
+?results/derived/phase9_v3/tables/**
+?results/derived/phase9_v3/figures/**
+
+# the six generated files the paper is compiled with
+paper_inputs <= manuscript/tables/*.tex

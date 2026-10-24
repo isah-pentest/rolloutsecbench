@@ -1,0 +1,7 @@
+data:
+  raw_train_file: "data/raw/UNSW_NB15_training-set.csv"
+  raw_test_file: "data/raw/UNSW_NB15_testing-set.csv"
+results:
+  derived_dir: "results/derived"
+  dataset_audit: "results/derived/dataset_audit.json"
+  dataset_class_distribution: "results/derived/dataset_class_distribution.csv"

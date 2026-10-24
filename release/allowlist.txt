@@ -1,0 +1,93 @@
+# Files released publicly, at the same path, from the private repository (pathlib glob rules:
+# "*" does not cross "/"). A file is released only if it is listed here, matches nothing in
+# denylist.txt, and is committed. Public replacements for private front matter live in release/public/.
+# Decisions are recorded in docs/RELEASE_DECISIONS.md.
+
+# ---------------------------------------------------------------- reproduction documentation and tooling
+REPRODUCE.md
+docs/REPRODUCTION_MAP.md
+docs/IDENTIFIERS.md
+docs/RELEASE_DECISIONS.md
+environment/published_hashes.sha256
+release/build_public_release.py
+release/allowlist.txt
+release/denylist.txt
+release/inspect_local_repo.py
+release/inspect_details.py
+release/install_kit.sh
+tools/verify_release.py
+tools/reproduce_claims.sh
+tools/compare_generated.py
+paper/figures/fig1_architecture.tex
+
+# ---------------------------------------------------------------- offline pipeline (Sections 3.3-3.4, 4.1)
+configs/experiment.yaml
+configs/model_v1.yaml
+configs/paths.yaml
+training/config.py
+training/generate_splits.py
+training/audit_dataset.py
+training/fit_preprocessor.py
+training/train_v1.py
+training/train_v2.py
+training/evaluate_static_test.py
+training/evaluate_malicious_disagreement.py
+training/evaluate_model_revision_acceptance.py
+analysis/close_phase4_gate2.py
+
+# ---------------------------------------------------------------- serving apparatus (Section 3.1)
+serving/api/app.py
+serving/api/requirements.txt
+serving/docker/Dockerfile
+serving/run_phase5_equivalence.py
+serving/router/phase7/router_phase7_v1.py
+serving/router/requirements.txt
+# router image gate3-v2.1-execution003-layoutfix1: its Dockerfile and every file it copies (verified in the running container)
+serving/router/execution003/Dockerfile
+serving/router/gate3_v2_candidates/route_oracle_v2_candidate003.py
+serving/router/gate3_v2_candidates/router_v2_candidate003.py
+data/manifests/phase6_router_validation_protocol_v2.1.json
+data/manifests/phase5_serving_protocol_v1.0.json
+kubernetes/campaign/CONTAINER_FILES.json
+release/verify_container_files.py
+data/manifests/phase7/router/phase7_router_protocol_v1.0.json
+# Kubernetes objects of the campaign, exported from the live cluster and verified against
+# runtime_at_freeze by release/export_campaign_k8s.py (all checks MATCH; see EXPORT_VERIFICATION.json).
+# The unused ConfigMap phase9-router-v2-candidate002-source is excluded by the denylist (*candidate*).
+kubernetes/campaign/*.json
+kubernetes/campaign/kind-cluster.yaml
+release/export_campaign_k8s.py
+release/write_kind_config.sh
+release/check_campaign_files.sh
+data/manifests/phase9_v3/deviations/router-direct-nodeport.yaml
+
+# ---------------------------------------------------------------- recorded environments
+environment/requirements.lock
+environment/analysis_environment.lock
+environment/campaign_environment.txt
+release/collect_environment.sh
+release/build_evidence_archive.py
+release/archive_allowlist.txt
+release/cleanroom_test.sh
+
+# ---------------------------------------------------------------- confirmatory campaign (pinned in the freeze manifest)
+workloads/xm_loader.py
+workloads/v3_client.py
+workloads/validate_v3_run.py
+workloads/v3_campaign.py
+workloads/make_v3_freeze.py
+# supporting workloads and recovery
+workloads/analyze_v3.py
+workloads/xm_equivalence_gate.py
+experiments/verify_xm_readiness.py
+tools/v3_preflight/finalize_interrupted_run.py
+
+# ---------------------------------------------------------------- analysis, tables, figures, claims (Section 4)
+analysis/confirmatory/h2_h5_tests.py
+analysis/exploratory/routing_null_check.py
+analysis/tables/make_gate4_tex.py
+analysis/tables/make_table1_dataset.py
+analysis/tables/make_table2_models.py
+analysis/claims/make_claims_tex.py
+analysis/figures/make_fig2_disagreement.py
+analysis/figures/make_fig5_interaction.py

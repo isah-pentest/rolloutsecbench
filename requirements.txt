@@ -1,0 +1,8 @@
+# Level 2 (offline claims reproduction, tools/reproduce_claims.sh). Most scripts use only the standard library.
+numpy>=1.26
+matplotlib>=3.8
+#
+# Level 3 (re-execution) uses the pinned versions of the original apparatus:
+#   model serving : serving/api/requirements.txt   (fastapi, uvicorn, pandas, numpy, scikit-learn, joblib, xgboost 3.4.1)
+#   router        : serving/router/requirements.txt (fastapi, uvicorn, httpx)
+#   offline pipeline (training/): see the imports at the top of each script (pyyaml for configs/)

@@ -1,0 +1,718 @@
+{
+  "analysis_outputs_required": [
+    "request-level joined evidence",
+    "replicate-level routing summary",
+    "condition-level routing summary",
+    "Gate-3A evidence-completeness result",
+    "Gate-3B deterministic-integrity result",
+    "Gate-3C distribution-consistency result",
+    "Gate-3D dependence result",
+    "composite Gate-3 disposition",
+    "execution manifest",
+    "cryptographic checksum manifest"
+  ],
+  "backend_api_contract": {
+    "endpoint": "/predict",
+    "features_rule": "Router must forward only the frozen 42 raw model features inside the backend features object; routing metadata, ground truth, sample identity, and reporting metadata must not enter the backend feature object.",
+    "method": "POST",
+    "model_hash_match_required": true,
+    "preprocessor_hash_match_required": true,
+    "request_exact_fields": [
+      "request_id",
+      "features"
+    ],
+    "request_id_response_match_required": true,
+    "request_id_rule": "Router must forward the same client request_id to the selected backend.",
+    "response_required_fields": [
+      "request_id",
+      "model_version",
+      "prediction",
+      "probability",
+      "processing_ms",
+      "model_sha256",
+      "preprocessor_sha256",
+      "raw_feature_count",
+      "transformed_feature_count"
+    ],
+    "selected_revision_response_match_required": true
+  },
+  "connection_modes": {
+    "FRESH": "fresh client connection/session for each request",
+    "PERSISTENT": "one client HTTP session/connection pool retained through the condition-run where transport permits"
+  },
+  "dataset": {
+    "eligibility": "ground_truth_label == 0",
+    "malicious_rows_allowed": false,
+    "minimum_eligible_rows": 11200,
+    "replacement": false,
+    "requests_per_condition_per_replicate": 11200,
+    "sampling": "none",
+    "sequence_rule": "Use the same frozen first 11200 eligible validation benign rows, in frozen source order, for every condition-run.",
+    "split": "validation",
+    "test_split_allowed": false,
+    "traffic_class": "benign"
+  },
+  "decision_precedence": {
+    "invalid_is_not_failure": true,
+    "invalid_is_not_pass": true,
+    "order": [
+      "INVALID",
+      "FAIL",
+      "PASS"
+    ],
+    "rule": "Evaluate evidence completeness and deterministic integrity prerequisites before inferential disposition. Any condition that makes the execution non-evaluable produces INVALID. Only a valid/evaluable execution may receive FAIL or PASS."
+  },
+  "decision_semantics": {
+    "FAIL": "Execution is valid and evaluable but one or more blocking Gate-3 components fail.",
+    "INVALID": "Required evidence/precondition/runtime integrity is insufficient to evaluate the composite gate.",
+    "PASS": "Execution is valid and all four components G_E, G_I, G_D, and G_S pass.",
+    "phase7_authorization_rule": "Phase 7 may be authorized only after a prospectively frozen Gate-3 v2 protocol is executed validly and the composite Gate-3 decision is PASS."
+  },
+  "execution": {
+    "execution_order": [
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 1,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 2,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 3,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 4,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 5,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 6,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 7,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R3"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 8,
+        "replicate_id": "replicate_001",
+        "requests": 11200,
+        "rollout_state": "R3"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 9,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 10,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 11,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 12,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 13,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 14,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 15,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R3"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 16,
+        "replicate_id": "replicate_002",
+        "requests": 11200,
+        "rollout_state": "R3"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 17,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 18,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R0"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 19,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 20,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R1"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 21,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 22,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R2"
+      },
+      {
+        "connection_mode": "FRESH",
+        "ordinal": 23,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R3"
+      },
+      {
+        "connection_mode": "PERSISTENT",
+        "ordinal": 24,
+        "replicate_id": "replicate_003",
+        "requests": 11200,
+        "rollout_state": "R3"
+      }
+    ],
+    "load_target": null,
+    "max_inflight_requests": 1,
+    "qps_target": null,
+    "retries": 0,
+    "same_benign_sequence_for_every_condition": true,
+    "total_condition_runs": 24,
+    "total_planned_requests": 268800,
+    "traffic_schedule": "SEQUENTIAL"
+  },
+  "failure_policy": {
+    "add_replicates_after_result": false,
+    "change_acceptance_rules_after_result": false,
+    "drop_unfavorable_replicate": false,
+    "preserve_failed_execution": true,
+    "preserve_invalid_execution": true,
+    "preserve_root_cause_evidence": true,
+    "silently_delete_raw_evidence": false
+  },
+  "frozen_execution_dependencies": {
+    "feature_names": {
+      "feature_order_rule": "Use source_feature_order from the cryptographically frozen feature_names artifact.",
+      "path": "data/processed/feature_names.json",
+      "raw_feature_count": 42,
+      "sha256": "2d17e517d2e4ec044f421af2e84020c6b189b8f35a744d281bb6a126650d320a",
+      "transformed_feature_count": 192
+    },
+    "preprocessor": {
+      "role": "Expected backend preprocessing identity; every successful request must report this exact identity.",
+      "sha256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f"
+    },
+    "validation_population": {
+      "columns": 45,
+      "eligibility_rule": "ground_truth label numerically equals 0",
+      "ground_truth_column": "label",
+      "join_key": "id",
+      "path": "data/splits/validation.csv",
+      "reporting_only_column": "attack_cat",
+      "rows": 35069,
+      "same_selected_sequence_for_every_condition": true,
+      "selected_rows_per_condition": 11200,
+      "selection_rule": "Scan the cryptographically frozen validation CSV in physical source row order; retain eligible rows without replacement; use exactly the first 11200 eligible rows.",
+      "sha256": "a7d4177beeb928f91e84edac8103a8222f018a1ceb3324ec9e167eb714f75971",
+      "source": "FROZEN_VALIDATION_SPLIT",
+      "test_split_allowed": false
+    }
+  },
+  "gate3": {
+    "G_D_distribution_consistency": {
+      "aggregate_n_per_condition": 33600,
+      "applicable_conditions": [
+        "R1_FRESH",
+        "R1_PERSISTENT",
+        "R2_FRESH",
+        "R2_PERSISTENT"
+      ],
+      "blocking": true,
+      "blocking_interpretation": "A Holm-significant deviation from the configured routing probability is a Gate-3C failure.",
+      "configured_v2_probabilities": {
+        "R1": 0.1,
+        "R2": 0.5
+      },
+      "multiple_testing": "Holm-Bonferroni across the four pre-specified mixed-state conditions at family-wise alpha=0.05",
+      "non_significance_interpretation": "Failure to reject is not proof of exact equality.",
+      "planning_effect_delta": 0.01,
+      "planning_effect_is_acceptance_threshold": false,
+      "planning_effect_role": "prospective sample-size/power justification only",
+      "primary_inference": "exact two-sided binomial test",
+      "replicate_count": 3,
+      "reporting": [
+        "replicate-level V1 count",
+        "replicate-level V2 count",
+        "replicate-level observed V2 share",
+        "aggregate V1 count",
+        "aggregate V2 count",
+        "aggregate observed V2 share",
+        "Wilson 95% confidence interval",
+        "exact two-sided binomial p-value",
+        "Holm-adjusted decision",
+        "absolute deviation from configured probability"
+      ],
+      "requests_per_replicate": 11200,
+      "role": "Gate 3C"
+    },
+    "G_E_evidence_completeness": {
+      "blocking": true,
+      "failure_semantics": "Missing or incomplete required evidence makes the execution INVALID, not PASS and not silently excluded.",
+      "requirements": [
+        "all 24 condition-runs complete",
+        "exactly 11200 attempted requests per condition-run",
+        "zero HTTP failures",
+        "zero missing request_id values",
+        "zero duplicate request_id values within execution",
+        "complete client evidence",
+        "complete persistent router evidence",
+        "successful one-to-one client/router join",
+        "all required run metadata present",
+        "all required cryptographic identities present",
+        "no unexpected runtime restart"
+      ],
+      "role": "Gate 3A"
+    },
+    "G_I_deterministic_integrity": {
+      "blocking": true,
+      "endpoint_controls": {
+        "R0": "all requests must select V1 exactly",
+        "R3": "all requests must select V2 exactly"
+      },
+      "expected_count_for_each": 0,
+      "role": "Gate 3B",
+      "zero_tolerance_requirements": [
+        "route reconstruction mismatch",
+        "selected revision versus contacted backend mismatch",
+        "router-reported versus reconstructed uniform mismatch",
+        "router-reported versus configured weight mismatch",
+        "model hash mismatch",
+        "preprocessor hash mismatch",
+        "seed registry mismatch",
+        "request-sequence mismatch",
+        "FRESH/PERSISTENT expected-route schedule mismatch"
+      ]
+    },
+    "G_S_sequence_dependence": {
+      "aggregate_transitions_per_condition": 33597,
+      "applicable_conditions": [
+        "R1_FRESH",
+        "R1_PERSISTENT",
+        "R2_FRESH",
+        "R2_PERSISTENT"
+      ],
+      "blocking": true,
+      "blocking_interpretation": "Holm-significant lag-1 dependence is a Gate-3D failure.",
+      "cross_replicate_transition_allowed": false,
+      "fresh_persistent_aggregate_share_difference": "descriptive diagnostic only; not a standalone blocking criterion in v2 because FRESH and PERSISTENT use a paired common expected routing schedule.",
+      "multiple_testing": "Holm-Bonferroni across the four pre-specified lag-1 tests at family-wise alpha=0.05",
+      "non_significance_interpretation": "Non-significance is not proof of perfect independence.",
+      "planning_effect_cramers_V": 0.02,
+      "planning_effect_is_acceptance_threshold": false,
+      "planning_effect_role": "prospective sample-size/power justification only",
+      "required_statistics": [
+        "V1_to_V1",
+        "V1_to_V2",
+        "V2_to_V1",
+        "V2_to_V2",
+        "P(V2_t | V1_t_minus_1)",
+        "P(V2_t | V2_t_minus_1)",
+        "absolute_conditional_probability_difference",
+        "Pearson_chi_square",
+        "raw_p_value",
+        "Cramers_V",
+        "maximum_same_revision_run_length"
+      ],
+      "role": "Gate 3D",
+      "transition_boundary": "compute lag-1 transitions within each replicate only",
+      "transitions_per_replicate": 11199
+    },
+    "formal_rule": "G3 = G_E AND G_I AND G_D AND G_S"
+  },
+  "phase": "PHASE_6_ROUTER_VALIDATION",
+  "precommitted_seed_registry": {
+    "R0": {
+      "replicate_001": {
+        "material": "protocol_identity_basis_sha256|R0|replicate_001",
+        "sha256": "057ff78c943d7377858ddaa0033e6bf7c7fd3643e782687b98345f475e78f5a0"
+      },
+      "replicate_002": {
+        "material": "protocol_identity_basis_sha256|R0|replicate_002",
+        "sha256": "a804eaf847b5d790c3333c83099955239fd72920a7947a368130318ef03c3dc2"
+      },
+      "replicate_003": {
+        "material": "protocol_identity_basis_sha256|R0|replicate_003",
+        "sha256": "50154fee683c3fb7f1e6c37314775f24addeb6e195e194817167dfdee2d55027"
+      }
+    },
+    "R1": {
+      "replicate_001": {
+        "material": "protocol_identity_basis_sha256|R1|replicate_001",
+        "sha256": "ff64910d66fcb86c41ac9b19a3ac050b706a5aa4f8ef1274a9b68e41d69aa0e0"
+      },
+      "replicate_002": {
+        "material": "protocol_identity_basis_sha256|R1|replicate_002",
+        "sha256": "96ae8b132a4bc5432bfc1a1450f42d801361d624650083268326a9f96d7dbe61"
+      },
+      "replicate_003": {
+        "material": "protocol_identity_basis_sha256|R1|replicate_003",
+        "sha256": "fa9e1b5744958b29f4d4aeff92c8010c44dfcbc58e2482bb8896c414b5d75bc5"
+      }
+    },
+    "R2": {
+      "replicate_001": {
+        "material": "protocol_identity_basis_sha256|R2|replicate_001",
+        "sha256": "807b3f48890ae2da45a9c323bbf8a76ba83eea2cc0325cca4194237c56369275"
+      },
+      "replicate_002": {
+        "material": "protocol_identity_basis_sha256|R2|replicate_002",
+        "sha256": "3d6a4b8e8dbe4757875fc2c27971bde9b32eefa565d8812a963be5a2771c5c47"
+      },
+      "replicate_003": {
+        "material": "protocol_identity_basis_sha256|R2|replicate_003",
+        "sha256": "c853acfcd7b4ac22264ff65580a71fd09a18b636e6aea648f52f83e26dfa7ca5"
+      }
+    },
+    "R3": {
+      "replicate_001": {
+        "material": "protocol_identity_basis_sha256|R3|replicate_001",
+        "sha256": "7490dcb1a471bc91595355b1464bf2bf89ec5c869279f9e4f27cccc4b149f68d"
+      },
+      "replicate_002": {
+        "material": "protocol_identity_basis_sha256|R3|replicate_002",
+        "sha256": "556affd7f11a6a8e739a718120e560aa86ea9fea4d23c98bc2f2637b9644c0bb"
+      },
+      "replicate_003": {
+        "material": "protocol_identity_basis_sha256|R3|replicate_003",
+        "sha256": "2442fb42738cd9019a369dae6bdcda635cd4b3b3700b9bf386ba16f30d3fe5ed"
+      }
+    }
+  },
+  "preexecution_boundary": {
+    "candidate_frozen": true,
+    "candidate_only": false,
+    "execution003_started": false,
+    "execution_authorized": false,
+    "gate3_passed": false,
+    "phase7_authorized": false,
+    "prediction_traffic_sent": 0,
+    "routing_traffic_sent": 0
+  },
+  "promotion_provenance": {
+    "execution003_started": false,
+    "execution_authorized": false,
+    "gate3_passed": false,
+    "new_routing_traffic_sent": 0,
+    "parent_frozen_protocol": "data/manifests/phase6_router_validation_protocol_v2.0.json",
+    "parent_frozen_protocol_sha256": "ee744b8fbe2770fecbf952734b21fe5ce8c5711d2b3411a45e1bab48c2b18359",
+    "phase7_authorized": false,
+    "prediction_traffic_sent": 0,
+    "promotion_type": "PROSPECTIVE_PREEXECUTION_FREEZE",
+    "source_candidate": "data/manifests/gate3_v2_candidates/phase6_router_validation_protocol_v2.1_candidate_preexecution.json",
+    "source_candidate_sha256": "3ab2f4d1b678e9f1348c898beb801e72a071e9a89954fe3c8bd7a48e2117098e"
+  },
+  "protocol_identity": {
+    "final_file_sha256_role": "external cryptographic identity assigned only after independent validation and freeze; never used recursively as routing seed material.",
+    "identity_basis": {
+      "design_justification_sha256": "9470f3048d4aac125afe8820a0bf59d6fa3900eed25ae97f27cce7ff2f818401",
+      "historical_v1_protocol_sha256": "959089ab14ec87ff43cf6dce0f77ccbfdd0ee5bb09683465fe45a5c5dd17a81a",
+      "protocol_family": "RolloutSecBench_Gate3_router_validation",
+      "protocol_version": "2.0",
+      "replicate_ids": [
+        "replicate_001",
+        "replicate_002",
+        "replicate_003"
+      ],
+      "replication_count": 3,
+      "requests_per_condition_per_replicate": 11200,
+      "rollout_states": {
+        "R0": {
+          "v1_weight": 1.0,
+          "v2_weight": 0.0
+        },
+        "R1": {
+          "v1_weight": 0.9,
+          "v2_weight": 0.1
+        },
+        "R2": {
+          "v1_weight": 0.5,
+          "v2_weight": 0.5
+        },
+        "R3": {
+          "v1_weight": 0.0,
+          "v2_weight": 1.0
+        }
+      },
+      "routing_oracle_version": "gate3_v2_common_schedule_v1"
+    },
+    "identity_basis_sha256": "1a2ed7935b292a0f3ddae3795303efacb7188df97f7d4be67af9d656ad741b0a"
+  },
+  "protocol_name": "RolloutSecBench Gate-3 Router Validation Protocol v2.1",
+  "protocol_revision": {
+    "acceptance_logic_changed": false,
+    "execution003_started_before_revision": false,
+    "historical_gate3_result_changed": false,
+    "parent_protocol": "data/manifests/phase6_router_validation_protocol_v2.0.json",
+    "parent_protocol_sha256": "ee744b8fbe2770fecbf952734b21fe5ce8c5711d2b3411a45e1bab48c2b18359",
+    "prediction_traffic_before_revision": 0,
+    "reason": "Prospective reproducibility revision created before Execution003 because independent pre-execution audit showed that v2.0 specified the dataset-selection and Gate-3 statistical methods conceptually but did not cryptographically bind the validation/feature artifacts or fully freeze computational statistical conventions.",
+    "replication_count_changed": false,
+    "requests_per_condition_changed": false,
+    "revision_timing": "PREEXECUTION",
+    "routing_oracle_changed": false,
+    "routing_traffic_before_revision": 0,
+    "scientific_design_changed": false
+  },
+  "protocol_status": "FROZEN_PREEXECUTION",
+  "protocol_version": "2.1",
+  "provenance": {
+    "frozen_design_justification": "results/derived/gate3_v2_design/gate3_v2_replication_design_justification.json",
+    "frozen_design_justification_sha256": "9470f3048d4aac125afe8820a0bf59d6fa3900eed25ae97f27cce7ff2f818401",
+    "historical_v1_protocol": "data/manifests/phase6_router_validation_protocol_v1.0.json",
+    "historical_v1_protocol_sha256": "959089ab14ec87ff43cf6dce0f77ccbfdd0ee5bb09683465fe45a5c5dd17a81a",
+    "historical_v1_result_reclassified": false
+  },
+  "replication": {
+    "full_protocol_rerun_after_valid_root_cause_fix": "required if a failed/invalid execution requires a scientifically justified implementation correction",
+    "k": 3,
+    "post_result_seed_addition_allowed": false,
+    "replicate_ids": [
+      "replicate_001",
+      "replicate_002",
+      "replicate_003"
+    ],
+    "replication_unit": "independently derived deterministic precommitted routing stream",
+    "selective_rerun_allowed": false
+  },
+  "required_logging": {
+    "client_record_required_fields": [
+      "request_id",
+      "replicate_id",
+      "rollout_state",
+      "connection_mode",
+      "zero_based_request_sequence",
+      "sample_id",
+      "http_status",
+      "response_revision",
+      "model_sha256",
+      "preprocessor_sha256"
+    ],
+    "join_key": "request_id",
+    "router_record_required_fields": [
+      "request_id",
+      "replicate_id",
+      "rollout_state",
+      "connection_mode",
+      "zero_based_request_sequence",
+      "configured_v1_weight",
+      "configured_v2_weight",
+      "routing_seed_digest",
+      "routing_uniform",
+      "selected_revision",
+      "contacted_backend",
+      "model_sha256",
+      "preprocessor_sha256"
+    ]
+  },
+  "rollout_states": {
+    "R0": {
+      "v1_weight": 1.0,
+      "v2_weight": 0.0
+    },
+    "R1": {
+      "v1_weight": 0.9,
+      "v2_weight": 0.1
+    },
+    "R2": {
+      "v1_weight": 0.5,
+      "v2_weight": 0.5
+    },
+    "R3": {
+      "v1_weight": 0.0,
+      "v2_weight": 1.0
+    }
+  },
+  "routing_oracle": {
+    "common_schedule_across_connection_modes": true,
+    "connection_mode_in_route_seed": false,
+    "decision_rule": "select V2 iff u < configured_v2_weight; otherwise V1",
+    "forbidden_route_inputs": [
+      "connection_mode",
+      "feature_values",
+      "sample_id",
+      "ground_truth",
+      "prediction",
+      "HTTP_session_identity",
+      "backend_response"
+    ],
+    "hash": "SHA-256",
+    "paired_mode_control": "For the same rollout_state, replicate_id, and zero_based_request_sequence, FRESH and PERSISTENT must reconstruct the same expected revision.",
+    "replicate_seed_derivation": {
+      "digest": "SHA-256",
+      "material": "protocol_identity_basis_sha256 + '|' + rollout_state + '|' + replicate_id",
+      "note": "The executable protocol identity basis is defined inside this protocol independently of the final protocol-file SHA-256 to avoid circular self-hashing."
+    },
+    "request_uniform_derivation": {
+      "digest": "SHA-256",
+      "material": "replicate_seed_digest + '|' + zero_based_request_sequence"
+    },
+    "sequence_indexing": "zero_based_request_sequence",
+    "uniform_mapping": "UINT64_BE(digest[0:8]) / 2^64"
+  },
+  "scientific_scope": {
+    "attack_traffic_allowed": false,
+    "malicious_validation_data_allowed": false,
+    "phase7_authorized_by_this_candidate": false,
+    "purpose": "Validate router evidence completeness, deterministic routing integrity, configured-distribution consistency, and sequence-level dependence before Phase 7.",
+    "traffic": "BENIGN_ONLY"
+  },
+  "statistical_computation_contract": {
+    "gate3c": {
+      "aggregation": "Pool the three precommitted replicates within each rollout-state x connection-mode condition; do not pool FRESH with PERSISTENT.",
+      "exact_two_sided_binomial_definition": "For observed successes k under Binomial(n,p0), the two-sided exact p-value is the sum of null probabilities of all outcomes j in [0,n] whose Binomial(n,p0) probability is less than or equal to the null probability of the observed outcome k, with floating comparison implemented at sufficient precision to avoid decision changes at alpha=0.05.",
+      "multiplicity": {
+        "algorithm": "Sort raw p-values ascending with deterministic condition-name tie break. For ordered position i=1..m, compare p_(i) with alpha/(m-i+1). Reject sequentially until the first non-rejection; that hypothesis and all remaining hypotheses are not rejected.",
+        "blocking_rule": "Gate-3C fails if one or more of the four pre-specified hypotheses is rejected by the Holm step-down procedure.",
+        "family_size": 4,
+        "family_wise_alpha": 0.05,
+        "method": "HOLM_BONFERRONI_STEP_DOWN"
+      },
+      "n_per_test": 33600,
+      "null_probabilities": {
+        "R1_FRESH": 0.1,
+        "R1_PERSISTENT": 0.1,
+        "R2_FRESH": 0.5,
+        "R2_PERSISTENT": 0.5
+      },
+      "success_definition": "selected_revision == V2",
+      "tests": [
+        "R1_FRESH",
+        "R1_PERSISTENT",
+        "R2_FRESH",
+        "R2_PERSISTENT"
+      ],
+      "wilson_interval": {
+        "confidence_level": 0.95,
+        "continuity_correction": false,
+        "definition": "Standard Wilson score interval for a binomial proportion without continuity correction.",
+        "z": 1.959963984540054
+      }
+    },
+    "gate3d": {
+      "aggregate_transitions_per_condition": 33597,
+      "cramers_v": {
+        "bias_correction": false,
+        "definition": "sqrt(Pearson_chi_square / aggregate_transition_count)"
+      },
+      "maximum_same_revision_run_length": "Compute within each replicate separately and report the maximum across the three replicates; runs may not cross replicate boundaries.",
+      "multiplicity": {
+        "algorithm": "Sort raw p-values ascending with deterministic condition-name tie break. For ordered position i=1..m, compare p_(i) with alpha/(m-i+1). Reject sequentially until the first non-rejection; that hypothesis and all remaining hypotheses are not rejected.",
+        "blocking_rule": "Gate-3D fails if one or more of the four pre-specified lag-1 independence hypotheses is rejected by the Holm step-down procedure.",
+        "family_size": 4,
+        "family_wise_alpha": 0.05,
+        "method": "HOLM_BONFERRONI_STEP_DOWN"
+      },
+      "pearson_chi_square": {
+        "continuity_correction": false,
+        "degrees_of_freedom": 1,
+        "expected_counts": "Expected cell count E_ij = (row_total_i * column_total_j) / grand_total.",
+        "invalid_condition": "If any required expected count is zero, the dependence test is not evaluable and the execution is INVALID rather than silently modifying the table.",
+        "p_value": "Upper-tail probability P(ChiSquare_df=1 >= observed Pearson statistic).",
+        "statistic": "sum over four cells of (O_ij-E_ij)^2/E_ij"
+      },
+      "revision_encoding": {
+        "V1": 0,
+        "V2": 1
+      },
+      "table_orientation": {
+        "columns": [
+          "current_V1",
+          "current_V2"
+        ],
+        "rows": [
+          "previous_V1",
+          "previous_V2"
+        ]
+      },
+      "tests": [
+        "R1_FRESH",
+        "R1_PERSISTENT",
+        "R2_FRESH",
+        "R2_PERSISTENT"
+      ],
+      "transition_rule": "Construct adjacent lag-1 revision pairs separately within each replicate in zero-based request-sequence order. Never construct a transition across replicate boundaries. Sum the three replicate 2x2 transition tables elementwise for each condition.",
+      "transitions_per_replicate": 11199
+    },
+    "numeric_policy": {
+      "count_arithmetic": "exact integer arithmetic",
+      "reported_probability_precision": "Do not round values before hypothesis testing, confidence-interval calculation, multiplicity adjustment, or Gate-3 decisions."
+    }
+  }
+}

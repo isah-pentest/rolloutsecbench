@@ -1,0 +1,84 @@
+# Never released, even if an allowlist pattern matches (case-insensitive fnmatch on the full path and
+# on the file name; "*" crosses "/" here on purpose).
+
+# internal planning, protocol and supporting documents
+*blueprint*
+*statistical_audit*
+*audit_and_adjustments*
+docs/experiment_protocol*
+docs/phase*/*
+docs/blueprint*/*
+docs/internal/*
+*forensic*
+*authorization*
+*_draft*
+*runbook*
+*manual*
+*notes*
+README_V3_CAMPAIGN*
+README_ANALYSIS_OF_RECORD*
+RolloutSecBench_README.md
+RolloutSecBench_ARTIFACT-EVALUATION.md
+NEXT
+PENDING
+CONCURRENT
+# pre-execution front matter (public versions are in release/public/)
+README.md
+ARTIFACT-EVALUATION.md
+Makefile
+reproduce.sh
+pyproject.toml
+metadata.toml
+LICENSE
+CITATION.cff
+generate_checksums.sh
+compute_fig2_clean.py
+data/download_dataset.sh
+data/README.md
+tests/*
+manuscript/*
+release_inspection*.txt
+_release_kit/*
+*.docx
+*.pptx
+
+# superseded engineering candidates and pre-v3 executions
+experiments/blueprint_v2/*
+experiments/phase6/*
+experiments/phase7/*
+experiments/phase8/*
+experiments/phase9/*
+*candidate*
+artifacts/*
+scaled_down/*
+
+# data, models and evidence (dataset owner / evidence archive)
+data/raw/*
+data/splits/*
+data/processed/*
+models/*
+results/*
+
+# local environments, caches, logs, credentials
+.venv*
+*__pycache__*
+*.pyc
+.mypy_cache/*
+.ruff_cache/*
+*.egg-info*
+*.log
+.env
+*.env
+*.pem
+*.key
+*id_rsa*
+*.kubeconfig
+kubeconfig*
+
+# kit backups
+*.kitbak
+
+# exceptions: exact paths released despite a pattern above (docs/RELEASE_DECISIONS.md, "Router image")
+!serving/router/execution003/Dockerfile
+!serving/router/gate3_v2_candidates/route_oracle_v2_candidate003.py
+!serving/router/gate3_v2_candidates/router_v2_candidate003.py

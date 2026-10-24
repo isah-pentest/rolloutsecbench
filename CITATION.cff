@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use RolloutSecBench, please cite it as below."
+title: "RolloutSecBench"
+abstract: "Code and reproduction tooling for the paper \"Model Rollout Evasion: Security Consistency of ML Threat Detection Under Continuous Deployment.\""
+type: software
+repository-code: "https://github.com/isah-pentest/rolloutsecbench"
+url: "https://github.com/isah-pentest/rolloutsecbench"
+authors:
+  - family-names: Mohammed
+    given-names: Isah
+  - family-names: Shashidhar
+    given-names: Narasimha
+license: MIT
+keywords:
+  - machine learning security
+  - intrusion detection
+  - continuous deployment
+  - progressive rollout
+  - Kubernetes

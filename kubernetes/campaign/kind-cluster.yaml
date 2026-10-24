@@ -1,0 +1,14 @@
+# RolloutSecBench campaign cluster (kind). Reconstructed on 2026-10-24 from the live node
+# rolloutsecbench-qualification-control-plane, which ran the confirmatory campaign; not the file used to create it.
+# Live node: image kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5, kind default networking (kindnet), podSubnet 10.244.0.0/16,
+# serviceSubnet 10.96.0.0/16, no host bind mounts. Host port bindings of the live node:
+# {"6443/tcp":[{"HostIp":"127.0.0.1","HostPort":"41775"}]}
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: rolloutsecbench-qualification
+networking:
+  podSubnet: 10.244.0.0/16
+  serviceSubnet: 10.96.0.0/16
+nodes:
+  - role: control-plane
+    image: kindest/node@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5

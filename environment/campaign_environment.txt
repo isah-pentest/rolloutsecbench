@@ -1,0 +1,125 @@
+collected_utc: 2026-10-24T04:15:47Z
+
+== host hardware (Windows)
+manufacturer: Alienware
+model: Alienware 15 DA15265
+installed_memory_bytes: 16438382592
+cpu: AMD Ryzen 7 260 w/ Radeon 780M
+physical_cores: 8
+logical_processors: 16
+max_clock_mhz: 3801
+memory_module: 16 GB, 5600 MT/s, SMBIOS type 34
+gpu: AMD Radeon 780M Graphics, driver 32.0.22030.3001
+gpu: NVIDIA GeForce RTX 5050 Laptop GPU, driver 32.0.16.1060
+disk: SSD, NVMe, 1.02 TB
+
+== host operating system (Windows)
+os: Microsoft Windows 11 Home
+os_version: 10.0.26200
+os_build: 26200
+power_scheme: Balanced
+
+== WSL 2
+WSL version: 2.7.12.0
+Kernel version: 6.18.33.2-2
+WSLg version: 1.0.73.2
+MSRDC version: 1.2.7214
+Direct3D version: 1.611.1-81528511
+DXCore version: 10.0.26100.1-240331-1435.ge-release
+Windows version: 10.0.26200.9711
+kernel: 6.18.33.2-microsoft-standard-WSL2
+distribution: Ubuntu 26.04 LTS
+wsl_logical_processors: 8
+wsl_memory_total_kib: 12248700
+wslconfig (memory/processors limits, if set):
+memory=12GB
+processors=8
+swap=4GB
+
+== container and Kubernetes tooling
+docker_client: 29.7.2
+docker_server: 29.7.2
+docker_server_os: linux/amd64
+docker_desktop: Docker Desktop
+docker_cpus: 8
+docker_memory_bytes: 12542668800
+cgroup: cgroupfs v2
+kind: kind v0.33.0 go1.26.7 linux/amd64
+kubectl_client_gitVersion: v1.37.0
+kubernetes_server_gitVersion: v1.37.0
+node_kubelet: v1.37.0
+node_runtime: containerd://2.3.4
+node_os: Debian GNU/Linux 13 (trixie)
+node_kernel: 6.18.33.2-microsoft-standard-WSL2
+node_cpu_capacity: 8
+node_memory_capacity: 12248700Ki
+
+== campaign containers: Python and packages actually installed
+-- router
+image: rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1
+cpu/memory requests: {}
+replicas: 1
+python 3.14.7 x86_64
+fastapi==0.141.1
+httpx==0.28.1
+pydantic==2.13.5
+starlette==1.6.0
+uvicorn==0.52.4
+-- model-v1
+image: rolloutsecbench-serving:phase5-v3
+cpu/memory requests: {}
+replicas: 1
+python 3.14.7 x86_64
+fastapi==0.141.1
+joblib==1.6.0
+numpy==2.5.3
+pandas==3.0.5
+pydantic==2.13.5
+scikit-learn==1.9.1
+scipy==1.18.1
+starlette==1.6.0
+uvicorn==0.52.4
+xgboost==3.4.1
+-- model-v2
+image: rolloutsecbench-serving:phase5-v3
+cpu/memory requests: {}
+replicas: 1
+python 3.14.7 x86_64
+fastapi==0.141.1
+joblib==1.6.0
+numpy==2.5.3
+pandas==3.0.5
+pydantic==2.13.5
+scikit-learn==1.9.1
+scipy==1.18.1
+starlette==1.6.0
+uvicorn==0.52.4
+xgboost==3.4.1
+
+== local Python environments
+-- .venv-blueprint-v2/bin/python
+python 3.14.4
+matplotlib==3.11.2
+numpy==2.5.4
+-- .venv-gate3-v2/bin/python
+python 3.14.4
+-- .venv-phase8-stats/bin/python
+python 3.14.4
+numpy==2.5.3
+scipy==1.16.3
+-- .venv-phase9/bin/python
+python 3.14.4
+
+== versions recorded in the frozen model manifests
+"joblib": "1.6.0"
+"numpy": "2.5.3"
+"pandas": "3.0.5"
+"python": "3.14.4"
+"scikit_learn": "1.9.1"
+"scikit_learn":"{\"
+"xgboost": "3.4.1"
+
+== analysis of record provenance
+
+== TeX (for the manuscript build)
+pdflatex not on WSL PATH

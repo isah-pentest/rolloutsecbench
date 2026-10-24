@@ -1,0 +1,172 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {
+    "labels": {
+      "app": "router"
+    },
+    "name": "router",
+    "namespace": "rolloutsecbench"
+  },
+  "spec": {
+    "progressDeadlineSeconds": 600,
+    "replicas": 1,
+    "revisionHistoryLimit": 10,
+    "selector": {
+      "matchLabels": {
+        "app": "router"
+      }
+    },
+    "strategy": {
+      "type": "Recreate"
+    },
+    "template": {
+      "metadata": {
+        "annotations": {
+          "rolloutsecbench/phase": "7",
+          "rolloutsecbench/phase7-deployment-fix": "uvicorn-import-path-v1",
+          "rolloutsecbench/router-protocol": "phase7-v1.0"
+        },
+        "labels": {
+          "app": "router"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "args": [
+              "serving.router.phase7.router_phase7_v1:app",
+              "--host",
+              "0.0.0.0",
+              "--port",
+              "8000"
+            ],
+            "command": [
+              "python",
+              "-m",
+              "uvicorn"
+            ],
+            "env": [
+              {
+                "name": "PHASE7_PROTOCOL_PATH",
+                "value": "/phase7/protocol/phase7_router_protocol_v1.0.json"
+              },
+              {
+                "name": "V1_BACKEND_URL",
+                "value": "http://model-v1.rolloutsecbench.svc.cluster.local:8000"
+              },
+              {
+                "name": "V2_BACKEND_URL",
+                "value": "http://model-v2.rolloutsecbench.svc.cluster.local:8000"
+              },
+              {
+                "name": "PHASE6_PROTOCOL_PATH",
+                "value": "/app/data/manifests/phase6_router_validation_protocol_v2.1.json"
+              },
+              {
+                "name": "V1_MODEL_SHA256",
+                "value": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c"
+              },
+              {
+                "name": "V2_MODEL_SHA256",
+                "value": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874"
+              },
+              {
+                "name": "ROUTER_EVIDENCE_PATH",
+                "value": "/evidence/phase9_v3_router_requests.jsonl"
+              },
+              {
+                "name": "EXPECTED_PREPROCESSOR_SHA256",
+                "value": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f"
+              }
+            ],
+            "image": "rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1",
+            "imagePullPolicy": "Never",
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/health",
+                "port": "http",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "name": "router",
+            "ports": [
+              {
+                "containerPort": 8000,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 15,
+              "httpGet": {
+                "path": "/health",
+                "port": "http",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 1,
+              "periodSeconds": 2,
+              "successThreshold": 1,
+              "timeoutSeconds": 1
+            },
+            "resources": {},
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/app/serving/router/phase7/router_phase7_v1.py",
+                "name": "phase7-router-source",
+                "readOnly": true,
+                "subPath": "router_phase7_v1.py"
+              },
+              {
+                "mountPath": "/phase7/protocol/phase7_router_protocol_v1.0.json",
+                "name": "phase7-router-protocol",
+                "readOnly": true,
+                "subPath": "phase7_router_protocol_v1.0.json"
+              },
+              {
+                "mountPath": "/evidence",
+                "name": "phase6-router-evidence"
+              }
+            ],
+            "workingDir": "/app"
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {},
+        "terminationGracePeriodSeconds": 30,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 420,
+              "name": "phase7-router-source"
+            },
+            "name": "phase7-router-source"
+          },
+          {
+            "configMap": {
+              "defaultMode": 420,
+              "name": "phase7-router-protocol"
+            },
+            "name": "phase7-router-protocol"
+          },
+          {
+            "hostPath": {
+              "path": "/var/lib/rolloutsecbench/phase6-router-evidence",
+              "type": "DirectoryOrCreate"
+            },
+            "name": "phase6-router-evidence"
+          }
+        ]
+      }
+    }
+  }
+}

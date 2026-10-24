@@ -1,0 +1,93 @@
+{
+  "router": [
+    {
+      "path": "/app/data/manifests/phase6_router_validation_protocol_v2.1.json",
+      "sha256": "dec25e9d7a303c5d104595ca907cf30717eaadde9a9934c3e037b7da330e1d05",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/serving/router/gate3_v2_candidates/route_oracle_v2_candidate003.py",
+      "sha256": "8b0db6d8fbb7f3c2cbb2eedb396d77a305cfc7b6cebfe76df4f7cc1293989cad",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/serving/router/gate3_v2_candidates/router_v2_candidate003.py",
+      "sha256": "a9c207061f2e2334c0d1b076c352a524346178f816682e75f97770135e5e996a",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/serving/router/phase7/router_phase7_v1.py",
+      "sha256": "358bab022fef2a5992d57cf0528fe046be493d9c1172a2b9ccff353a7fe54c60",
+      "status": "mounted"
+    },
+    {
+      "path": "/app/serving/router/requirements.txt",
+      "sha256": "615fde979da4b9095c14bef6a57b4d9e20f7dde111cbd04961ab08bf051a15fb",
+      "status": "MATCH"
+    }
+  ],
+  "model-v1": [
+    {
+      "path": "/app/data/manifests/phase5_serving_protocol_v1.0.json",
+      "sha256": "14cf8b552e4805295245d8b80311413edc58121f89fa23d629eb0a4622e1c8df",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/data/processed/feature_names.json",
+      "sha256": "2d17e517d2e4ec044f421af2e84020c6b189b8f35a744d281bb6a126650d320a",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/preprocessing/preprocessor.joblib",
+      "sha256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/v1/model.json",
+      "sha256": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/v2/model.json",
+      "sha256": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/serving/api/app.py",
+      "sha256": "7995c2f7ad85585552c7ebb83bf5824654564f98b4fa74dace1e7e6e8f8e06df",
+      "status": "MATCH"
+    }
+  ],
+  "model-v2": [
+    {
+      "path": "/app/data/manifests/phase5_serving_protocol_v1.0.json",
+      "sha256": "14cf8b552e4805295245d8b80311413edc58121f89fa23d629eb0a4622e1c8df",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/data/processed/feature_names.json",
+      "sha256": "2d17e517d2e4ec044f421af2e84020c6b189b8f35a744d281bb6a126650d320a",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/preprocessing/preprocessor.joblib",
+      "sha256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/v1/model.json",
+      "sha256": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/models/v2/model.json",
+      "sha256": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874",
+      "status": "MATCH"
+    },
+    {
+      "path": "/app/serving/api/app.py",
+      "sha256": "7995c2f7ad85585552c7ebb83bf5824654564f98b4fa74dace1e7e6e8f8e06df",
+      "status": "MATCH"
+    }
+  ]
+}

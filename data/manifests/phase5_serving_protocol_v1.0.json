@@ -1,0 +1,145 @@
+{
+  "artifact": "RolloutSecBench",
+  "schema_version": "1.0",
+  "phase": "Phase 5 - Serving Validation",
+  "protocol_status": "FROZEN_PREEXECUTION",
+
+  "authorization": {
+    "required_gate": "Gate 2",
+    "required_gate_status": "PASS",
+    "gate2_artifact_path": "results/derived/gate2_malicious_disagreement.json",
+    "gate2_artifact_sha256": "707fcff2929666ea8f98a1b6b917506a19a626bba094865c68942cc0aad590ae",
+    "phase4_closure_manifest_path": "results/derived/phase4_closure_manifest.json",
+    "phase4_closure_manifest_sha256": "55f5152502f44a42a352e1b5425c9db3b98f6775f574a681fc880c3d6d787a42"
+  },
+
+  "equivalence_population": {
+    "name": "FULL_FROZEN_VALIDATION",
+    "selection_method": "ALL_ROWS_NO_SUBSAMPLING",
+    "path": "data/splits/validation.csv",
+    "sha256": "a7d4177beeb928f91e84edac8103a8222f018a1ceb3324ec9e167eb714f75971",
+    "rows": 35069,
+    "columns": 45,
+    "join_key": "id",
+    "join_key_unique": true,
+    "ground_truth_column": "label",
+    "reporting_only_column": "attack_cat"
+  },
+
+  "input_contract": {
+    "representation": "RAW_42_MODEL_FEATURES",
+    "source_column_count": 45,
+    "model_feature_count": 42,
+    "excluded_from_model_input": [
+      "id",
+      "attack_cat",
+      "label"
+    ],
+    "categorical_features": [
+      "proto",
+      "service",
+      "state"
+    ],
+    "preprocessing_location": "INSIDE_INFERENCE_SERVICE",
+    "preprocessor_refit_allowed": false
+  },
+
+  "preprocessing": {
+    "path": "models/preprocessing/preprocessor.joblib",
+    "sha256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f",
+    "feature_names_path": "data/processed/feature_names.json",
+    "feature_names_sha256": "2d17e517d2e4ec044f421af2e84020c6b189b8f35a744d281bb6a126650d320a",
+    "raw_feature_count": 42,
+    "transformed_feature_count": 192
+  },
+
+  "models": {
+    "v1": {
+      "model_path": "models/v1/model.json",
+      "model_sha256": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c",
+      "manifest_path": "models/v1/model_manifest.json",
+      "decision_threshold": 0.5,
+      "offline_reference_path": "results/derived/v1_validation_predictions.csv",
+      "offline_reference_sha256": "4a0b42b50f91673f8e2bb8ccc1d0536798762bb4a5a332bfc230fa6e1864c14d"
+    },
+
+    "v2": {
+      "model_path": "models/v2/model.json",
+      "model_sha256": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874",
+      "manifest_path": "models/v2/model_manifest.json",
+      "decision_threshold": 0.5,
+      "offline_reference_path": "results/derived/v2_validation_predictions.csv",
+      "offline_reference_sha256": "c06e9631a9baabfdba963b9062a1698b18947c9434f70aad8de05804cc917727"
+    }
+  },
+
+  "api_contract": {
+    "method": "POST",
+    "endpoint": "/predict",
+    "request_required_fields": [
+      "request_id",
+      "features"
+    ],
+    "response_required_fields": [
+      "request_id",
+      "model_version",
+      "prediction",
+      "probability",
+      "processing_ms",
+      "model_sha256",
+      "preprocessor_sha256",
+      "raw_feature_count",
+      "transformed_feature_count"
+    ],
+    "model_version_values": [
+      "v1",
+      "v2"
+    ]
+  },
+
+  "equivalence_rules": {
+    "probability_metric": "ABSOLUTE_DIFFERENCE",
+    "probability_epsilon": 0.0001,
+    "probability_operator": "STRICTLY_LESS_THAN",
+    "discrete_prediction_rule": "EXACT_MATCH",
+    "maximum_discrete_prediction_mismatches": 0,
+    "maximum_model_version_mismatches": 0,
+    "maximum_http_failures": 0,
+    "both_revisions_must_pass": true
+  },
+
+  "failure_policy": {
+    "any_discrete_prediction_mismatch": "BLOCKING_DEFECT",
+    "any_probability_difference_greater_than_or_equal_to_epsilon": "BLOCKING_DEFECT",
+    "any_model_version_mismatch": "BLOCKING_DEFECT",
+    "any_http_failure": "BLOCKING_DEFECT",
+    "phase6_authorized_on_failure": false,
+    "preserve_failed_equivalence_runs": true,
+    "rerun_after_root_cause_fix": true
+  },
+
+  "scientific_constraints": {
+    "training_allowed": false,
+    "model_refit_allowed": false,
+    "preprocessor_refit_allowed": false,
+    "threshold_tuning_allowed": false,
+    "hyperparameter_tuning_allowed": false,
+    "test_data_access_required": false,
+    "malicious_disagreement_recomputation_allowed": false,
+    "router_analysis_allowed": false,
+    "rollout_analysis_allowed": false
+  },
+
+  "planned_outputs": {
+    "request_level_equivalence": "results/derived/serving_equivalence.csv",
+    "summary": "results/derived/serving_equivalence_summary.json",
+    "manifest": "results/derived/serving_equivalence_manifest.json"
+  },
+
+  "continuation_rule": {
+    "phase5_pass_condition": "BOTH_V1_AND_V2_PASS_ALL_EQUIVALENCE_RULES",
+    "phase6_router_validation_authorized_only_after_phase5_pass": true,
+    "phase7_pilot_authorized": false,
+    "phase9_main_experiment_authorized": false
+  }
+}

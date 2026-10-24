@@ -1,0 +1,475 @@
+{
+  "protocol_name": "RolloutSecBench Phase-7 Router Protocol",
+  "protocol_version": "1.0",
+  "protocol_status": "PROSPECTIVE_PREEXECUTION",
+  "scientific_role": "Deterministic weighted routing for Phase-7 capacity calibration and randomized malicious pilot",
+  "parent_validation": {
+    "gate3_protocol_sha256": "dec25e9d7a303c5d104595ca907cf30717eaadde9a9934c3e037b7da330e1d05",
+    "gate3_result_sha256": "9cdf6bba9f3d01e2526de53d6287468f767519eb50199190ab79ea3e26c1bd2a",
+    "gate3_decision": "PASS"
+  },
+  "rollout_states": {
+    "R0": {
+      "v1_weight": 1.0,
+      "v2_weight": 0.0
+    },
+    "R1": {
+      "v1_weight": 0.9,
+      "v2_weight": 0.1
+    },
+    "R2": {
+      "v1_weight": 0.5,
+      "v2_weight": 0.5
+    },
+    "R3": {
+      "v1_weight": 0.0,
+      "v2_weight": 1.0
+    }
+  },
+  "routing": {
+    "algorithm": "SHA256 deterministic uniform threshold",
+    "route_seed_basis_sha256": "fa1c7a14b56398343fa0ea09ba200ab77bb67c55c4fc1c5aefd1da229fba9c1f",
+    "material": "route_seed_basis_sha256|run_id|request_sequence",
+    "digest_bytes": "first_8_big_endian_unsigned",
+    "uniform_denominator": "2^64",
+    "selection_rule": "v2 iff u < configured_v2_weight",
+    "connection_mode_in_seed": false
+  },
+  "capacity_calibration": {
+    "traffic_class": "BENIGN_ONLY",
+    "run_id": "PHASE7-CAPACITY-R2",
+    "rollout_state": "R2",
+    "connection_mode": "PERSISTENT",
+    "protocol": "data/manifests/phase7/capacity/phase7_capacity_protocol_v1.0.json"
+  },
+  "pilot": {
+    "randomization_seed": 2026091907,
+    "planned_runs": 40,
+    "manifest": "data/manifests/phase7/phase7_randomized_order.csv",
+    "runs": [
+      {
+        "execution_ordinal": 1,
+        "run_id": "P7-RUN-001",
+        "experiment_id": "PHASE7-PILOT-R0-A0",
+        "rollout_state": "R0",
+        "attacker_type": "A0",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 2,
+        "run_id": "P7-RUN-002",
+        "experiment_id": "PHASE7-PILOT-R3-A1",
+        "rollout_state": "R3",
+        "attacker_type": "A1",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 3,
+        "run_id": "P7-RUN-003",
+        "experiment_id": "PHASE7-PILOT-R1-A0",
+        "rollout_state": "R1",
+        "attacker_type": "A0",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 4,
+        "run_id": "P7-RUN-004",
+        "experiment_id": "PHASE7-PILOT-R2-A1",
+        "rollout_state": "R2",
+        "attacker_type": "A1",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 5,
+        "run_id": "P7-RUN-005",
+        "experiment_id": "PHASE7-PILOT-R2-A0",
+        "rollout_state": "R2",
+        "attacker_type": "A0",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 6,
+        "run_id": "P7-RUN-006",
+        "experiment_id": "PHASE7-PILOT-R0-A0",
+        "rollout_state": "R0",
+        "attacker_type": "A0",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 7,
+        "run_id": "P7-RUN-007",
+        "experiment_id": "PHASE7-PILOT-R3-A1",
+        "rollout_state": "R3",
+        "attacker_type": "A1",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 8,
+        "run_id": "P7-RUN-008",
+        "experiment_id": "PHASE7-PILOT-R0-A1",
+        "rollout_state": "R0",
+        "attacker_type": "A1",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 9,
+        "run_id": "P7-RUN-009",
+        "experiment_id": "PHASE7-PILOT-R3-A0",
+        "rollout_state": "R3",
+        "attacker_type": "A0",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 10,
+        "run_id": "P7-RUN-010",
+        "experiment_id": "PHASE7-PILOT-R0-A0",
+        "rollout_state": "R0",
+        "attacker_type": "A0",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 11,
+        "run_id": "P7-RUN-011",
+        "experiment_id": "PHASE7-PILOT-R1-A1",
+        "rollout_state": "R1",
+        "attacker_type": "A1",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 12,
+        "run_id": "P7-RUN-012",
+        "experiment_id": "PHASE7-PILOT-R2-A1",
+        "rollout_state": "R2",
+        "attacker_type": "A1",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 13,
+        "run_id": "P7-RUN-013",
+        "experiment_id": "PHASE7-PILOT-R3-A0",
+        "rollout_state": "R3",
+        "attacker_type": "A0",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 14,
+        "run_id": "P7-RUN-014",
+        "experiment_id": "PHASE7-PILOT-R3-A1",
+        "rollout_state": "R3",
+        "attacker_type": "A1",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 15,
+        "run_id": "P7-RUN-015",
+        "experiment_id": "PHASE7-PILOT-R2-A0",
+        "rollout_state": "R2",
+        "attacker_type": "A0",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 16,
+        "run_id": "P7-RUN-016",
+        "experiment_id": "PHASE7-PILOT-R2-A0",
+        "rollout_state": "R2",
+        "attacker_type": "A0",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 17,
+        "run_id": "P7-RUN-017",
+        "experiment_id": "PHASE7-PILOT-R3-A0",
+        "rollout_state": "R3",
+        "attacker_type": "A0",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 18,
+        "run_id": "P7-RUN-018",
+        "experiment_id": "PHASE7-PILOT-R1-A1",
+        "rollout_state": "R1",
+        "attacker_type": "A1",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 19,
+        "run_id": "P7-RUN-019",
+        "experiment_id": "PHASE7-PILOT-R2-A1",
+        "rollout_state": "R2",
+        "attacker_type": "A1",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 20,
+        "run_id": "P7-RUN-020",
+        "experiment_id": "PHASE7-PILOT-R3-A0",
+        "rollout_state": "R3",
+        "attacker_type": "A0",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 21,
+        "run_id": "P7-RUN-021",
+        "experiment_id": "PHASE7-PILOT-R1-A1",
+        "rollout_state": "R1",
+        "attacker_type": "A1",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 22,
+        "run_id": "P7-RUN-022",
+        "experiment_id": "PHASE7-PILOT-R3-A0",
+        "rollout_state": "R3",
+        "attacker_type": "A0",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 23,
+        "run_id": "P7-RUN-023",
+        "experiment_id": "PHASE7-PILOT-R0-A0",
+        "rollout_state": "R0",
+        "attacker_type": "A0",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 24,
+        "run_id": "P7-RUN-024",
+        "experiment_id": "PHASE7-PILOT-R0-A1",
+        "rollout_state": "R0",
+        "attacker_type": "A1",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 25,
+        "run_id": "P7-RUN-025",
+        "experiment_id": "PHASE7-PILOT-R1-A0",
+        "rollout_state": "R1",
+        "attacker_type": "A0",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 26,
+        "run_id": "P7-RUN-026",
+        "experiment_id": "PHASE7-PILOT-R1-A0",
+        "rollout_state": "R1",
+        "attacker_type": "A0",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 27,
+        "run_id": "P7-RUN-027",
+        "experiment_id": "PHASE7-PILOT-R1-A1",
+        "rollout_state": "R1",
+        "attacker_type": "A1",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 28,
+        "run_id": "P7-RUN-028",
+        "experiment_id": "PHASE7-PILOT-R0-A1",
+        "rollout_state": "R0",
+        "attacker_type": "A1",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 29,
+        "run_id": "P7-RUN-029",
+        "experiment_id": "PHASE7-PILOT-R2-A0",
+        "rollout_state": "R2",
+        "attacker_type": "A0",
+        "pilot_replicate": 2,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 30,
+        "run_id": "P7-RUN-030",
+        "experiment_id": "PHASE7-PILOT-R1-A0",
+        "rollout_state": "R1",
+        "attacker_type": "A0",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 31,
+        "run_id": "P7-RUN-031",
+        "experiment_id": "PHASE7-PILOT-R0-A1",
+        "rollout_state": "R0",
+        "attacker_type": "A1",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 32,
+        "run_id": "P7-RUN-032",
+        "experiment_id": "PHASE7-PILOT-R2-A1",
+        "rollout_state": "R2",
+        "attacker_type": "A1",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 33,
+        "run_id": "P7-RUN-033",
+        "experiment_id": "PHASE7-PILOT-R3-A1",
+        "rollout_state": "R3",
+        "attacker_type": "A1",
+        "pilot_replicate": 3,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 34,
+        "run_id": "P7-RUN-034",
+        "experiment_id": "PHASE7-PILOT-R1-A0",
+        "rollout_state": "R1",
+        "attacker_type": "A0",
+        "pilot_replicate": 4,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 35,
+        "run_id": "P7-RUN-035",
+        "experiment_id": "PHASE7-PILOT-R1-A1",
+        "rollout_state": "R1",
+        "attacker_type": "A1",
+        "pilot_replicate": 5,
+        "configured_v1_weight": 0.9,
+        "configured_v2_weight": 0.1
+      },
+      {
+        "execution_ordinal": 36,
+        "run_id": "P7-RUN-036",
+        "experiment_id": "PHASE7-PILOT-R0-A0",
+        "rollout_state": "R0",
+        "attacker_type": "A0",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      },
+      {
+        "execution_ordinal": 37,
+        "run_id": "P7-RUN-037",
+        "experiment_id": "PHASE7-PILOT-R2-A0",
+        "rollout_state": "R2",
+        "attacker_type": "A0",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 38,
+        "run_id": "P7-RUN-038",
+        "experiment_id": "PHASE7-PILOT-R2-A1",
+        "rollout_state": "R2",
+        "attacker_type": "A1",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.5,
+        "configured_v2_weight": 0.5
+      },
+      {
+        "execution_ordinal": 39,
+        "run_id": "P7-RUN-039",
+        "experiment_id": "PHASE7-PILOT-R3-A1",
+        "rollout_state": "R3",
+        "attacker_type": "A1",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 0.0,
+        "configured_v2_weight": 1.0
+      },
+      {
+        "execution_ordinal": 40,
+        "run_id": "P7-RUN-040",
+        "experiment_id": "PHASE7-PILOT-R0-A1",
+        "rollout_state": "R0",
+        "attacker_type": "A1",
+        "pilot_replicate": 1,
+        "configured_v1_weight": 1.0,
+        "configured_v2_weight": 0.0
+      }
+    ],
+    "attacker_types": {
+      "A0": {
+        "description": "single malicious replay",
+        "attempts": 1
+      },
+      "A1": {
+        "description": "repeated probing",
+        "retry_budgets": [
+          1,
+          5,
+          10,
+          20
+        ],
+        "maximum_attempts": 20
+      }
+    }
+  },
+  "evidence": {
+    "router_evidence_path": "/evidence/phase7_router_requests.jsonl",
+    "append_only": true,
+    "phase6_evidence_path_prohibited": "/evidence/execution004_router_requests.jsonl"
+  },
+  "phase7_attack_execution_authorized": false,
+  "authorization_note": "Capacity calibration and final pilot protocol must be frozen before malicious pilot execution."
+}

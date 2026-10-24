@@ -1,0 +1,154 @@
+{
+  "context": "kind-rolloutsecbench-qualification",
+  "namespace": "rolloutsecbench",
+  "freeze": "data/manifests/phase9_v3/phase9_v3_freeze.json",
+  "objects": [
+    "ConfigMap/phase7-router-protocol",
+    "ConfigMap/phase7-router-source",
+    "ConfigMap/phase9-router-v2-candidate002-source",
+    "Deployment/model-v1",
+    "Deployment/model-v2",
+    "Deployment/router",
+    "Service/model-v1",
+    "Service/model-v2",
+    "Service/router",
+    "Service/router-direct"
+  ],
+  "checks": [
+    {
+      "check": "router image",
+      "status": "MATCH",
+      "live": "rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1",
+      "frozen": "rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1"
+    },
+    {
+      "check": "router command",
+      "status": "MATCH",
+      "live": [
+        "python",
+        "-m",
+        "uvicorn",
+        "serving.router.phase7.router_phase7_v1:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ],
+      "frozen": [
+        "python",
+        "-m",
+        "uvicorn",
+        "serving.router.phase7.router_phase7_v1:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ]
+    },
+    {
+      "check": "router env",
+      "status": "MATCH",
+      "live": {
+        "PHASE7_PROTOCOL_PATH": "/phase7/protocol/phase7_router_protocol_v1.0.json",
+        "V1_BACKEND_URL": "http://model-v1.rolloutsecbench.svc.cluster.local:8000",
+        "V2_BACKEND_URL": "http://model-v2.rolloutsecbench.svc.cluster.local:8000",
+        "PHASE6_PROTOCOL_PATH": "/app/data/manifests/phase6_router_validation_protocol_v2.1.json",
+        "V1_MODEL_SHA256": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c",
+        "V2_MODEL_SHA256": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874",
+        "ROUTER_EVIDENCE_PATH": "/evidence/phase9_v3_router_requests.jsonl",
+        "EXPECTED_PREPROCESSOR_SHA256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f"
+      },
+      "frozen": {
+        "EXPECTED_PREPROCESSOR_SHA256": "4ea29c9353505b423ce37b077f3ef821f76da426230518d771ebe217e3c2408f",
+        "PHASE6_PROTOCOL_PATH": "/app/data/manifests/phase6_router_validation_protocol_v2.1.json",
+        "PHASE7_PROTOCOL_PATH": "/phase7/protocol/phase7_router_protocol_v1.0.json",
+        "ROUTER_EVIDENCE_PATH": "/evidence/phase9_v3_router_requests.jsonl",
+        "V1_BACKEND_URL": "http://model-v1.rolloutsecbench.svc.cluster.local:8000",
+        "V1_MODEL_SHA256": "6c0aa79af5568231202f2aa150e2a388855a058601333cbdb067b54b097ac14c",
+        "V2_BACKEND_URL": "http://model-v2.rolloutsecbench.svc.cluster.local:8000",
+        "V2_MODEL_SHA256": "ea66463097938adf80145a872882dbb45cb8fdb3ffabdde5b23b633b586ca874"
+      }
+    },
+    {
+      "check": "ConfigMap phase7-router-protocol data hashes",
+      "status": "MATCH",
+      "live": {
+        "phase7_router_protocol_v1.0.json": "4226b83926cb83f65472e0f7cb35c5ff01a893866cd32b58e73904499f8ac781"
+      },
+      "frozen": {
+        "phase7_router_protocol_v1.0.json": "4226b83926cb83f65472e0f7cb35c5ff01a893866cd32b58e73904499f8ac781"
+      }
+    },
+    {
+      "check": "ConfigMap phase7-router-source data hashes",
+      "status": "MATCH",
+      "live": {
+        "router_phase7_v1.py": "358bab022fef2a5992d57cf0528fe046be493d9c1172a2b9ccff353a7fe54c60"
+      },
+      "frozen": {
+        "router_phase7_v1.py": "358bab022fef2a5992d57cf0528fe046be493d9c1172a2b9ccff353a7fe54c60"
+      }
+    },
+    {
+      "check": "pod model-v1 image",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/rolloutsecbench-serving:phase5-v3"
+      ],
+      "frozen": [
+        "docker.io/library/rolloutsecbench-serving:phase5-v3"
+      ]
+    },
+    {
+      "check": "pod model-v1 imageID",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/import-2026-10-17@sha256:4bfedc5db586c6d8b52d813ffa1f5c20ad87ead71586b46393478ef909c1029d"
+      ],
+      "frozen": [
+        "docker.io/library/import-2026-10-17@sha256:4bfedc5db586c6d8b52d813ffa1f5c20ad87ead71586b46393478ef909c1029d"
+      ]
+    },
+    {
+      "check": "pod model-v2 image",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/rolloutsecbench-serving:phase5-v3"
+      ],
+      "frozen": [
+        "docker.io/library/rolloutsecbench-serving:phase5-v3"
+      ]
+    },
+    {
+      "check": "pod model-v2 imageID",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/import-2026-10-17@sha256:4bfedc5db586c6d8b52d813ffa1f5c20ad87ead71586b46393478ef909c1029d"
+      ],
+      "frozen": [
+        "docker.io/library/import-2026-10-17@sha256:4bfedc5db586c6d8b52d813ffa1f5c20ad87ead71586b46393478ef909c1029d"
+      ]
+    },
+    {
+      "check": "pod router image",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1"
+      ],
+      "frozen": [
+        "docker.io/library/rolloutsecbench-router:gate3-v2.1-execution003-layoutfix1"
+      ]
+    },
+    {
+      "check": "pod router imageID",
+      "status": "MATCH",
+      "live": [
+        "docker.io/library/import-2026-10-17@sha256:148bdcfac942a20ccc95026e74301fd187702310bd6fce5e741841c05c7c5458"
+      ],
+      "frozen": [
+        "docker.io/library/import-2026-10-17@sha256:148bdcfac942a20ccc95026e74301fd187702310bd6fce5e741841c05c7c5458"
+      ]
+    }
+  ],
+  "all_match": true
+}
