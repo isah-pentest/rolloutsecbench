@@ -334,7 +334,7 @@ def draw(n, total, fam, g, out_dir, stamp):
     axb.get_yticklabels()[0].set_fontweight("bold")
     axb.tick_params(axis="y", pad=7)
     axb.set_xlabel("Samples in family (%)", color=INK2)
-    axb.set_title("(b) Directional disagreement", loc="left", pad=4, fontweight="bold")
+    axb.set_title("(b) Directional disagreement", loc="left", pad=13, fontweight="bold")  # clears the |X_D| header
     import matplotlib.transforms as mtransforms
     tr = mtransforms.blended_transform_factory(axb.transAxes, axb.transData)
     axb.text(1.20, YP + 0.62, r"$|X_D|$  (share of all)", ha="center", va="bottom", fontsize=6.0,
@@ -357,7 +357,7 @@ def draw(n, total, fam, g, out_dir, stamp):
     axc.axvline(pooled, color=MUTED, linewidth=0.7, linestyle=(0, (3, 2)), zorder=1)
     axc.tick_params(axis="y", labelleft=False)
     axc.set_xlabel("Samples in family (%)", color=INK2)
-    axc.set_title("(c) Both miss (ASR floor)", loc="left", pad=4, fontweight="bold")
+    axc.set_title("(c) Both miss (ASR floor)", loc="left", pad=13, fontweight="bold")  # aligned with (b)
 
     # -------------------- legend (identity never by colour alone) --------------------
     from matplotlib.lines import Line2D

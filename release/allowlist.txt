@@ -92,3 +92,5 @@ analysis/tables/make_table2_models.py
 analysis/claims/make_claims_tex.py
 analysis/figures/make_fig2_disagreement.py
 analysis/figures/make_fig5_interaction.py
+analysis/figures/make_fig3_exposure_law.py
+analysis/tables/make_table_models_revision.py

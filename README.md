@@ -1,6 +1,6 @@
 # RolloutSecBench
 
-Code and reproduction tooling for the paper **"Model Rollout Evasion: Security Consistency of ML Threat Detection Under Continuous Deployment."**
+Code and reproduction tooling for the paper **"Model Rollout Evasion: Quantifying and Predicting Systemic Evasion Risks During Progressive ML Deployment."**
 
 RolloutSecBench measures what happens to a deployed ML intrusion detector while a progressive rollout serves two accepted revisions at the same time. Two frozen XGBoost revisions, V1 and V2, are trained on UNSW-NB15 and served behind a weighted router on a single-node Kubernetes cluster. Every request records the revision that served it.
 
@@ -20,19 +20,19 @@ python3 tools/verify_release.py
 
 | Path | Contents | Paper |
 |---|---|---|
-| `configs/`, `training/` | Splits, strict non-overlap filter, dataset audit, preprocessing, V1/V2 training, static evaluation, acceptance (Gate 1), offline malicious disagreement | Sections 3.3, 3.4, 4.1 |
+| `configs/`, `training/` | Splits, strict non-overlap filter, dataset audit, preprocessing, V1/V2 training, static evaluation, acceptance (Gate 1), offline malicious disagreement | Sections 3.3, 3.5, 4.1 |
 | `analysis/close_phase4_gate2.py` | Closure of the offline disagreement analysis (H1) | Section 4.1 |
 | `serving/api/`, `serving/docker/` | Model-serving application and its container | Section 3.1 |
 | `serving/run_phase5_equivalence.py` | Offline-versus-container serving equivalence | Section 3.1 |
 | `serving/router/phase7/`, `data/manifests/phase7/router/` | Weighted router and its frozen protocol | Section 3.1 |
-| `kubernetes/campaign/`, `data/manifests/phase9_v3/deviations/` | Kubernetes objects exported from the campaign cluster and verified against the pre-registration; kind cluster definition; NodePort service of deviation DEV-001 | Sections 3.1, 3.6 |
-| `workloads/` | Request loader, attack client, campaign runner, run validator, freeze generator, confirmatory analysis, serving-equivalence gate | Sections 3.1, 3.6, 4 |
-| `analysis/` | H2–H5 tests, exploratory routing-rule check, Tables 1/S1/2/6, Figures 2 and 4, claims generator | Section 4 |
+| `kubernetes/campaign/`, `data/manifests/phase9_v3/deviations/` | Kubernetes objects exported from the campaign cluster and verified against the pre-registration; kind cluster definition; NodePort service of deviation DEV-001 | Sections 3.1, 3.7 |
+| `workloads/` | Request loader, attack client, campaign runner, run validator, freeze generator, confirmatory analysis, serving-equivalence gate | Sections 3.1, 3.6, 3.7, 4 |
+| `analysis/` | H2–H5 tests, exploratory routing-rule check, Tables 3/S1/5/9, Figures 2–4, claims generator | Sections 3.3, 3.5, 4 |
 | `paper/figures/fig1_architecture.tex` | Figure 1 | Section 3.1 |
 | `tools/`, `release/` | Release verification, claims reproduction, comparison of regenerated values, release builder | — |
 | `serving/router/execution003/`, `serving/router/gate3_v2_candidates/` | Build of the campaign router image (see `docs/RELEASE_DECISIONS.md`) | Section 3.1 |
 | `environment/published_hashes.sha256` | SHA-256 identities of the data and frozen artifacts reported in the paper | Table S1, Figure 1 |
-| `environment/*.lock`, `environment/campaign_environment.txt` | Training, serving and analysis environments; workstation and cluster versions | Table S2 |
+| `environment/*.lock`, `environment/campaign_environment.txt` | Training, serving and analysis environments; workstation and cluster versions | Table 4 |
 | `docs/` | Reproduction map, identifiers used in the code, release decisions | — |
 
 **Not in this repository:**

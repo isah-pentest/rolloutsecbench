@@ -10,7 +10,7 @@ READ-ONLY. Inputs are verified before drawing:
   * per_run.csv and integrity_report.json against the analysis-of-record ANALYSIS_MANIFEST.sha256,
     the manifest's freeze hash against the freeze, and the live registry against the manifest
   * integrity_report.json must show PASS with checksums verified
-Expected values (dashed, open markers) come from the frozen disagreement counts and the exposure law:
+Expected values (dashed lines, cross markers) come from the frozen disagreement counts and the exposure law:
   E[C(n)] = both_miss + |X12| (1-(1-w)^n) + |X21| (1-w^n), at the configured w of each state.
 
 Outputs (--out-dir): fig5_interaction.pdf/.png, fig5_data.csv, fig5_provenance.json
@@ -138,7 +138,8 @@ def main():
     from matplotlib.lines import Line2D
     INK, INK2, MUTED, GRID = "#0b0b0b", "#52514e", "#8a8984", "#e4e3de"
     COL = {"A0": "#2a78d6", "A1": "#eb6834"}
-    MK = {"A0": "o", "A1": "D"}
+    MK = {"A0": "o", "A1": "^"}          # observed cell means: filled circle (A0), filled triangle (A1)
+    MK_LAW = "x"                         # expected (exposure law): cross, so it is never confused with an observed mean
     matplotlib.rcParams.update({
         "font.family": "sans-serif", "font.sans-serif": ["Helvetica", "Arial", "Liberation Sans", "DejaVu Sans"],
         "font.size": 7, "axes.labelsize": 7, "xtick.labelsize": 6.5, "ytick.labelsize": 6.5,
@@ -152,9 +153,9 @@ def main():
         cells = [x for x in summary if x["attacker"] == at]
         xm = [xs[x["state"]] + off[at] for x in cells]
         ym = [100 * x["mean"] for x in cells]
-        # expected (law) - dashed, open markers
+        # expected (law) - dashed line, cross markers
         ax.plot([xs[x["state"]] + off[at] for x in cells], [100 * x["expected_law"] for x in cells],
-                color=COL[at], lw=0.8, ls=(0, (3, 2)), marker=MK[at], ms=3.2, mfc="white", mew=0.8, zorder=2)
+                color=COL[at], lw=0.8, ls=(0, (3, 2)), marker=MK_LAW, ms=4.0, mew=1.0, zorder=2)
         # runs
         for x in cells:
             vals = [v for _, v in data[(x["state"], at)]]
@@ -165,7 +166,8 @@ def main():
         ax.plot(xm, ym, color=COL[at], lw=1.2, zorder=4)
         ax.errorbar(xm, ym, yerr=[[100 * (x["mean"] - x["ci95_lo"]) for x in cells],
                                   [100 * (x["ci95_hi"] - x["mean"]) for x in cells]],
-                    fmt=MK[at], ms=3.8, color=COL[at], mfc=COL[at], mec="white", mew=0.5, capsize=2, lw=1.0, zorder=5)
+                    fmt=MK[at], ms=4.2 if at == "A1" else 3.8, color=COL[at], mfc=COL[at], mec="white", mew=0.5,
+                    capsize=2, lw=1.0, zorder=5)
     ax.set_xticks(range(4))
     ax.set_xticklabels([f"{s}\n{int(round(100 * (1 - W[s])))}:{int(round(100 * W[s]))}" for s in STATES])
     ax.set_xlim(-0.45, 3.45)
@@ -176,9 +178,13 @@ def main():
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     handles = [
-        Line2D([], [], color=COL["A0"], marker="o", ms=3.8, lw=1.2, label="A0: C(1), single attempt"),
-        Line2D([], [], color=COL["A1"], marker="D", ms=3.8, lw=1.2, label=f"A1: C({K}), up to {K} attempts"),
-        Line2D([], [], color=INK2, marker="o", ms=3.2, mfc="white", lw=0.8, ls=(0, (3, 2)), label="expected (exposure law)"),
+        Line2D([], [], color=COL["A0"], marker=MK["A0"], ms=3.8, mec="white", mew=0.5, lw=1.2,
+               label="A0: C(1), single attempt"),
+        Line2D([], [], color=COL["A1"], marker=MK["A1"], ms=4.2, mec="white", mew=0.5, lw=1.2,
+               label=f"A1: C({K}), up to {K} attempts"),
+        Line2D([], [], color=INK2, marker=MK_LAW, ms=4.0, mew=1.0, lw=0.8, ls=(0, (3, 2)),
+               label="expected (exposure law)"),
+        Line2D([], [], color=INK2, marker="o", ms=2.2, alpha=0.35, lw=0, label="individual runs"),
     ]
     ax.legend(handles=handles, loc="upper left", frameon=False, fontsize=6.2, handlelength=2.2)
     pdf, png = out / "fig5_interaction.pdf", out / "fig5_interaction.png"

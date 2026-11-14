@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use RolloutSecBench, please cite it as below."
 title: "RolloutSecBench"
-abstract: "Code and reproduction tooling for the paper \"Model Rollout Evasion: Security Consistency of ML Threat Detection Under Continuous Deployment.\""
+abstract: "Code and reproduction tooling for the paper \"Model Rollout Evasion: Quantifying and Predicting Systemic Evasion Risks During Progressive ML Deployment.\""
 type: software
 repository-code: "https://github.com/isah-pentest/rolloutsecbench"
 url: "https://github.com/isah-pentest/rolloutsecbench"
@@ -18,8 +18,8 @@ authors:
     given-names: Narasimha
     affiliation: "Sam Houston State University"
     orcid: "https://orcid.org/0000-0002-4877-158X"
-version: "1.0.0"
-date-released: "2026-10-24"
+version: "1.0.1"
+date-released: "2026-11-13"
 license: MIT
 identifiers:
   - type: doi
