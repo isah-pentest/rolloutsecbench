@@ -94,3 +94,33 @@ analysis/figures/make_fig2_disagreement.py
 analysis/figures/make_fig5_interaction.py
 analysis/figures/make_fig3_exposure_law.py
 analysis/tables/make_table_models_revision.py
+
+# ---------------------------------------------------------------- revision r1: extension analyses (release v1.1.0)
+# Code, manifests and identity freezes only. Outputs and raw evidence are in the extension evidence archive
+# (release/archive_allowlist_ext.txt). The extension plan, its amendment, the deviation record, the facts
+# sheet and the manuscript stay private (release/denylist.txt).
+docs/IDENTIFIERS_R1.md
+docs/REPRODUCTION_R1.md
+release/archive_allowlist_ext.txt
+revision/analysis/*.py
+revision/simulator/*.py
+revision/figures/*.py
+revision/tables/*.py
+revision/manifests/*.sha256
+revision/manifests/cic/*.sha256
+revision/manifests/env_rsb_revision.lock
+revision/prereg/E3_FREEZE.json
+revision/prereg/E3_FREEZE.json.ots
+revision/prereg/E3_SIM_IDENTITIES.txt
+serving/router/ext1/router_ext1_v1.py
+data/manifests/ext1/ext1_router_protocol_v1.0.json
+data/manifests/ext1/ext1_live_freeze.json
+data/manifests/ext1/ext1_live_freeze.json.sha256
+data/manifests/ext1/ext1_live_freeze.json.ots
+kubernetes/ext1/*.json
+workloads/ext1_campaign.py
+workloads/ext1_client.py
+workloads/ext1_serving_gate.py
+workloads/make_ext1_k8s.py
+workloads/make_ext1_live_freeze.py
+workloads/validate_ext1_run.py

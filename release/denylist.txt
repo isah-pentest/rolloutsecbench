@@ -82,3 +82,9 @@ kubeconfig*
 !serving/router/execution003/Dockerfile
 !serving/router/gate3_v2_candidates/route_oracle_v2_candidate003.py
 !serving/router/gate3_v2_candidates/router_v2_candidate003.py
+
+# revision r1: extension plan, amendment, deviation record, facts sheet and result notes stay private
+revision/prereg/*.md
+revision/prereg/*.md.ots
+revision/facts/*
+revision/results/E2_NOTES.md

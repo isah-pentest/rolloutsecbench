@@ -1,0 +1,306 @@
+{
+ "live_cells": [
+  [
+   "P2",
+   "R1",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R1",
+   "A1-multi"
+  ],
+  [
+   "P3",
+   "R1",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R2",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R2",
+   "A1-multi"
+  ],
+  [
+   "P3",
+   "R2",
+   "A1-one"
+  ]
+ ],
+ "live_execution_order": [
+  "EXT1-P2-R2-A1-one-P02",
+  "EXT1-P3-R1-A1-one-P01",
+  "EXT1-P3-R1-A1-one-P02",
+  "EXT1-P2-R2-A1-one-P01",
+  "EXT1-P2-R1-A1-multi-P02",
+  "EXT1-P3-R2-A1-one-P02",
+  "EXT1-P3-R2-A1-one-P01",
+  "EXT1-P2-R1-A1-one-P02",
+  "EXT1-P2-R1-A1-one-P01",
+  "EXT1-P2-R2-A1-multi-P02",
+  "EXT1-P2-R1-A1-multi-P01",
+  "EXT1-P2-R2-A1-multi-P01"
+ ],
+ "live_identities": {
+  "P2-R1-A1-multi": {
+   "primary": [
+    "EXT1-P2-R1-A1-multi-P01",
+    "EXT1-P2-R1-A1-multi-P02"
+   ],
+   "reserve": [
+    "EXT1-P2-R1-A1-multi-R01",
+    "EXT1-P2-R1-A1-multi-R02"
+   ]
+  },
+  "P2-R1-A1-one": {
+   "primary": [
+    "EXT1-P2-R1-A1-one-P01",
+    "EXT1-P2-R1-A1-one-P02"
+   ],
+   "reserve": [
+    "EXT1-P2-R1-A1-one-R01",
+    "EXT1-P2-R1-A1-one-R02"
+   ]
+  },
+  "P2-R2-A1-multi": {
+   "primary": [
+    "EXT1-P2-R2-A1-multi-P01",
+    "EXT1-P2-R2-A1-multi-P02"
+   ],
+   "reserve": [
+    "EXT1-P2-R2-A1-multi-R01",
+    "EXT1-P2-R2-A1-multi-R02"
+   ]
+  },
+  "P2-R2-A1-one": {
+   "primary": [
+    "EXT1-P2-R2-A1-one-P01",
+    "EXT1-P2-R2-A1-one-P02"
+   ],
+   "reserve": [
+    "EXT1-P2-R2-A1-one-R01",
+    "EXT1-P2-R2-A1-one-R02"
+   ]
+  },
+  "P3-R1-A1-one": {
+   "primary": [
+    "EXT1-P3-R1-A1-one-P01",
+    "EXT1-P3-R1-A1-one-P02"
+   ],
+   "reserve": [
+    "EXT1-P3-R1-A1-one-R01",
+    "EXT1-P3-R1-A1-one-R02"
+   ]
+  },
+  "P3-R2-A1-one": {
+   "primary": [
+    "EXT1-P3-R2-A1-one-P01",
+    "EXT1-P3-R2-A1-one-P02"
+   ],
+   "reserve": [
+    "EXT1-P3-R2-A1-one-R01",
+    "EXT1-P3-R2-A1-one-R02"
+   ]
+  }
+ },
+ "live_order_rule": "random.Random(11242026).shuffle(primaries in cell order)",
+ "reserve_rule": "used only after an objective INVALID in the same cell, ascending; no re-run of a consumed identity",
+ "rules": "pre-registration v1.0 Sections 2 and 5",
+ "sim_cells": [
+  [
+   "P2",
+   "R0",
+   "A0"
+  ],
+  [
+   "P2",
+   "R0",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R0",
+   "A1-multi"
+  ],
+  [
+   "P2",
+   "R1",
+   "A0"
+  ],
+  [
+   "P2",
+   "R1",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R1",
+   "A1-multi"
+  ],
+  [
+   "P2",
+   "R2",
+   "A0"
+  ],
+  [
+   "P2",
+   "R2",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R2",
+   "A1-multi"
+  ],
+  [
+   "P2",
+   "R3",
+   "A0"
+  ],
+  [
+   "P2",
+   "R3",
+   "A1-one"
+  ],
+  [
+   "P2",
+   "R3",
+   "A1-multi"
+  ],
+  [
+   "P3",
+   "R0",
+   "A0"
+  ],
+  [
+   "P3",
+   "R0",
+   "A1-one"
+  ],
+  [
+   "P3",
+   "R1",
+   "A0"
+  ],
+  [
+   "P3",
+   "R1",
+   "A1-one"
+  ],
+  [
+   "P3",
+   "R2",
+   "A0"
+  ],
+  [
+   "P3",
+   "R2",
+   "A1-one"
+  ],
+  [
+   "P3",
+   "R3",
+   "A0"
+  ],
+  [
+   "P3",
+   "R3",
+   "A1-one"
+  ]
+ ],
+ "sim_identities_first_last": {
+  "P2-R0-A0": [
+   "SIM-P2-R0-A0-00001",
+   "SIM-P2-R0-A0-10000"
+  ],
+  "P2-R0-A1-multi": [
+   "SIM-P2-R0-A1-multi-00001",
+   "SIM-P2-R0-A1-multi-10000"
+  ],
+  "P2-R0-A1-one": [
+   "SIM-P2-R0-A1-one-00001",
+   "SIM-P2-R0-A1-one-10000"
+  ],
+  "P2-R1-A0": [
+   "SIM-P2-R1-A0-00001",
+   "SIM-P2-R1-A0-10000"
+  ],
+  "P2-R1-A1-multi": [
+   "SIM-P2-R1-A1-multi-00001",
+   "SIM-P2-R1-A1-multi-10000"
+  ],
+  "P2-R1-A1-one": [
+   "SIM-P2-R1-A1-one-00001",
+   "SIM-P2-R1-A1-one-10000"
+  ],
+  "P2-R2-A0": [
+   "SIM-P2-R2-A0-00001",
+   "SIM-P2-R2-A0-10000"
+  ],
+  "P2-R2-A1-multi": [
+   "SIM-P2-R2-A1-multi-00001",
+   "SIM-P2-R2-A1-multi-10000"
+  ],
+  "P2-R2-A1-one": [
+   "SIM-P2-R2-A1-one-00001",
+   "SIM-P2-R2-A1-one-10000"
+  ],
+  "P2-R3-A0": [
+   "SIM-P2-R3-A0-00001",
+   "SIM-P2-R3-A0-10000"
+  ],
+  "P2-R3-A1-multi": [
+   "SIM-P2-R3-A1-multi-00001",
+   "SIM-P2-R3-A1-multi-10000"
+  ],
+  "P2-R3-A1-one": [
+   "SIM-P2-R3-A1-one-00001",
+   "SIM-P2-R3-A1-one-10000"
+  ],
+  "P3-R0-A0": [
+   "SIM-P3-R0-A0-00001",
+   "SIM-P3-R0-A0-10000"
+  ],
+  "P3-R0-A1-one": [
+   "SIM-P3-R0-A1-one-00001",
+   "SIM-P3-R0-A1-one-10000"
+  ],
+  "P3-R1-A0": [
+   "SIM-P3-R1-A0-00001",
+   "SIM-P3-R1-A0-10000"
+  ],
+  "P3-R1-A1-one": [
+   "SIM-P3-R1-A1-one-00001",
+   "SIM-P3-R1-A1-one-10000"
+  ],
+  "P3-R2-A0": [
+   "SIM-P3-R2-A0-00001",
+   "SIM-P3-R2-A0-10000"
+  ],
+  "P3-R2-A1-one": [
+   "SIM-P3-R2-A1-one-00001",
+   "SIM-P3-R2-A1-one-10000"
+  ],
+  "P3-R3-A0": [
+   "SIM-P3-R3-A0-00001",
+   "SIM-P3-R3-A0-10000"
+  ],
+  "P3-R3-A1-one": [
+   "SIM-P3-R3-A1-one-00001",
+   "SIM-P3-R3-A1-one-10000"
+  ]
+ },
+ "sim_identities_sha256": "a4a8a947e5764191a2996b213b87cde035707bf285f7166945cb6b4b91b8e458",
+ "sim_per_cell": 10000,
+ "status": "FROZEN_BEFORE_ANY_E3_OUTCOME",
+ "weights": {
+  "R0": 0.0,
+  "R1": 0.1,
+  "R2": 0.5,
+  "R3": 1.0
+ }
+}

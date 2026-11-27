@@ -1,0 +1,30 @@
+# RolloutSecBench extension evidence archive (revision r1, release v1.1.0): outputs of the extension analyses
+# and the raw evidence of the live routing-policy runs. Same rules as release/archive_allowlist.txt; build with
+#   python3 release/build_evidence_archive.py --allowlist release/archive_allowlist_ext.txt \
+#          --manifest-name EXTENSION_MANIFEST.sha256 --out ../rolloutsecbench-evidence-ext-v1.1.tar.gz
+# Not archived: revision/results/E2_NOTES.md, the CIC-IDS2017 data files and splits (distributed by their
+# providers), the extension plan and amendment, the facts sheet.
+
+# outputs of S1-S4, E1-E5, the live-run comparison and the manuscript values (Sections 4.1-4.11)
+revision/results/*/**
+revision/results/*.log
+revision/results/*_console.txt
+revision/results/ext1_p3_canon_check.txt
+
+# raw evidence of the 12 live routing-policy runs (hashed in revision/results/e3_live/raw_evidence.sha256)
+results/raw/ext1/**
+
+# generated figures and tables with their data and provenance
+revision/figures/**/*.csv
+revision/figures/**/*.json
+revision/figures/**/*.tex
+revision/figures/**/*.pdf
+revision/figures/**/*.png
+revision/figures/*.json
+revision/tables/**/*.tex
+revision/tables/**/*.json
+
+# provenance records kept out of the code release (may contain local paths; reported by --list)
+revision/manifests/env_rsb_revision_system.txt
+revision/manifests/cic/cns2022_download_record.txt
+revision/manifests/cic/cns2022_headers.txt

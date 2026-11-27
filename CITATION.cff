@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use RolloutSecBench, please cite it as below."
 title: "RolloutSecBench"
-abstract: "Code and reproduction tooling for the paper \"Model Rollout Evasion: Quantifying and Predicting Systemic Evasion Risks During Progressive ML Deployment.\""
+abstract: "Code and reproduction tooling for the paper \"Model Rollout Evasion: Quantifying and Predicting Evasion Exposure During Progressive Deployment of Machine Learning Detectors.\""
 type: software
 repository-code: "https://github.com/isah-pentest/rolloutsecbench"
 url: "https://github.com/isah-pentest/rolloutsecbench"
@@ -18,13 +18,16 @@ authors:
     given-names: Narasimha
     affiliation: "Sam Houston State University"
     orcid: "https://orcid.org/0000-0002-4877-158X"
-version: "1.0.1"
-date-released: "2026-11-13"
+version: "1.1.0"
+date-released: "2026-11-26"
 license: MIT
 identifiers:
   - type: doi
     value: "10.5281/zenodo.23621512"
-    description: "Evidence archive"
+    description: "Evidence archive, version 1"
+  - type: doi
+    value: "10.5281/zenodo.24574435"
+    description: "Evidence archives, version 1.1 (extension analyses)"
 keywords:
   - machine learning security
   - intrusion detection

@@ -1,0 +1,97 @@
+{
+  "default_policy": "P1",
+  "evidence": {
+    "append_only": true,
+    "router_evidence_path": "/evidence/ext1_router_requests.jsonl"
+  },
+  "p3_feature_order": [
+    "dur",
+    "proto",
+    "service",
+    "state",
+    "spkts",
+    "dpkts",
+    "sbytes",
+    "dbytes",
+    "rate",
+    "sttl",
+    "dttl",
+    "sload",
+    "dload",
+    "sloss",
+    "dloss",
+    "sinpkt",
+    "dinpkt",
+    "sjit",
+    "djit",
+    "swin",
+    "stcpb",
+    "dtcpb",
+    "dwin",
+    "tcprtt",
+    "synack",
+    "ackdat",
+    "smean",
+    "dmean",
+    "trans_depth",
+    "response_body_len",
+    "ct_srv_src",
+    "ct_state_ttl",
+    "ct_dst_ltm",
+    "ct_src_dport_ltm",
+    "ct_dst_sport_ltm",
+    "ct_dst_src_ltm",
+    "is_ftp_login",
+    "ct_ftp_cmd",
+    "ct_flw_http_mthd",
+    "ct_src_ltm",
+    "ct_srv_dst",
+    "is_sm_ips_ports"
+  ],
+  "parent_router_protocol": {
+    "path": "data/manifests/phase7/router/phase7_router_protocol_v1.0.json",
+    "sha256": "4226b83926cb83f65472e0f7cb35c5ff01a893866cd32b58e73904499f8ac781"
+  },
+  "policies": {
+    "P1": {
+      "material": "route_seed_basis_sha256|run_id|request_sequence"
+    },
+    "P2": {
+      "material": "route_seed_basis_sha256|run_id|session_id",
+      "session_id_required": true
+    },
+    "P3": {
+      "canonical_vector": "values in p3_feature_order joined with '|'; str values as is, numbers as Python repr of the JSON-decoded value (equals the strict-test CSV text for all X_m samples)",
+      "material": "route_seed_basis_sha256|run_id|SHA256_hex(canonical feature vector)"
+    }
+  },
+  "policy_selection": "deployment environment variable ROUTING_POLICY (one router build; configuration value)",
+  "protocol_name": "RolloutSecBench EXT1 Router Protocol (revision r1, E3 routing policies)",
+  "protocol_status": "PROSPECTIVE_PREEXECUTION",
+  "protocol_version": "1.0",
+  "rollout_states": {
+    "R0": {
+      "v1_weight": 1.0,
+      "v2_weight": 0.0
+    },
+    "R1": {
+      "v1_weight": 0.9,
+      "v2_weight": 0.1
+    },
+    "R2": {
+      "v1_weight": 0.5,
+      "v2_weight": 0.5
+    },
+    "R3": {
+      "v1_weight": 0.0,
+      "v2_weight": 1.0
+    }
+  },
+  "routing": {
+    "algorithm": "SHA256 deterministic uniform threshold",
+    "digest_bytes": "first_8_big_endian_unsigned",
+    "route_seed_basis_sha256": "fa1c7a14b56398343fa0ea09ba200ab77bb67c55c4fc1c5aefd1da229fba9c1f",
+    "selection_rule": "v2 iff u < configured_v2_weight",
+    "uniform_denominator": "2^64"
+  }
+}

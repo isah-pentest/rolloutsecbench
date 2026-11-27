@@ -5,16 +5,20 @@
 #
 #   bash release/cleanroom_test.sh --public ../rolloutsecbench-public --archive ../rolloutsecbench-evidence-v1.tar.gz \
 #        --raw data/raw --python .venv-blueprint-v2/bin/python --train-python <venv with pandas 3.0.5> \
-#        [--work /tmp/rsb-cleanroom]
+#        [--archive-ext ../rolloutsecbench-evidence-ext-v1.1.tar.gz] [--work /tmp/rsb-cleanroom]
 #
 # Steps: copy the public tree; add the two raw files; regenerate data/splits/ with training/generate_splits.py
 # (only if the archive does not carry them); unpack the archive and check ARCHIVE_MANIFEST.sha256;
 # tools/verify_release.py --strict; tools/reproduce_claims.sh --reference-dir paper_inputs.
-# Passes only if every check passes and all six paper inputs are BYTE-IDENTICAL.
+# With --archive-ext (release v1.1.0): unpack the extension archive, check EXTENSION_MANIFEST.sha256 and
+# regenerate the extension values and tables with revision/analysis/make_results_ext_values.py.
+# Passes only if every check passes, all six paper inputs are BYTE-IDENTICAL and, with --archive-ext, the four
+# extension files match revision/manifests/phase9_results_values.sha256.
 set -euo pipefail
-WORK=/tmp/rsb-cleanroom; PUBLIC=""; ARCHIVE=""; RAW=""; PY=""; TPY=""
+WORK=/tmp/rsb-cleanroom; PUBLIC=""; ARCHIVE=""; ARCHIVE_EXT=""; RAW=""; PY=""; TPY=""
 while [[ $# -gt 0 ]]; do case "$1" in
   --public) PUBLIC=$(realpath "$2"); shift 2 ;; --archive) ARCHIVE=$(realpath "$2"); shift 2 ;;
+  --archive-ext) ARCHIVE_EXT=$(realpath "$2"); shift 2 ;;
   --raw) RAW=$(realpath "$2"); shift 2 ;; --python) PY=$(realpath -s "$2"); shift 2 ;;
   --train-python) TPY=$(realpath -s "$2"); shift 2 ;; --work) WORK="$2"; shift 2 ;;
   *) echo "unknown argument $1"; exit 2 ;; esac; done
@@ -42,6 +46,11 @@ step "3. evidence archive"
 tar xzf "$ARCHIVE"
 sha256sum -c --quiet <(grep -v '^#' ARCHIVE_MANIFEST.sha256) && echo "ARCHIVE_MANIFEST.sha256: all files OK"
 mkdir -p paper_inputs_check && cp paper_inputs/*.tex paper_inputs_check/
+if [[ -n "$ARCHIVE_EXT" ]]; then
+  tar xzf "$ARCHIVE_EXT"
+  sha256sum -c --quiet <(grep -v '^#' EXTENSION_MANIFEST.sha256)   # a mismatch stops the test (set -e)
+  echo "EXTENSION_MANIFEST.sha256: all files OK"
+fi
 
 step "4. dataset splits"
 if ls data/splits/*.csv >/dev/null 2>&1; then
@@ -83,4 +92,14 @@ step "6. regenerate every value, table and figure and compare with paper_inputs/
 PYTHON="$PY" bash tools/reproduce_claims.sh --reference-dir paper_inputs 2>&1 | tail -15
 G=$(ls -d results/reproduced/*/paper/tables | tail -1)
 "$PY" tools/compare_generated.py paper_inputs "$G"
+
+if [[ -n "$ARCHIVE_EXT" ]]; then
+  step "7. regenerate the extension values and tables (revision r1) and compare byte for byte"
+  # every input is checked against revision/manifests/ by the generator; it overwrites
+  # revision/results/manuscript_values/, whose archived copies are checked against the manifest first
+  sha256sum -c --quiet revision/manifests/phase9_results_values.sha256
+  echo "archived extension values: OK"
+  "$PY" revision/analysis/make_results_ext_values.py
+  sha256sum -c revision/manifests/phase9_results_values.sha256
+fi
 echo; echo "CLEAN-ROOM TEST PASSED in $WORK"

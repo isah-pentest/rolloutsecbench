@@ -6,13 +6,16 @@ Run from the private repository root:
 
     python3 release/build_evidence_archive.py --list                  # inspect only; writes nothing
     python3 release/build_evidence_archive.py --out ../rolloutsecbench-evidence-v1.tar.gz
+    python3 release/build_evidence_archive.py --allowlist release/archive_allowlist_ext.txt \
+            --manifest-name EXTENSION_MANIFEST.sha256 --out ../rolloutsecbench-evidence-ext-v1.1.tar.gz
 
-Selection: release/archive_allowlist.txt. data/raw/ is never archived; data/splits/ only with
+Selection: release/archive_allowlist.txt, or the file given with --allowlist. data/raw/ is never archived; data/splits/ only with
 --include-splits. Every file is copied byte for byte: nothing is rewritten, so every hash recorded in
 the manifests, run checksums and the paper still verifies. Tar entries carry no owner names
 (uid/gid 0, empty uname/gname) and are written in sorted order.
 
-The archive contains ARCHIVE_MANIFEST.sha256 (SHA-256 of every file, plus the source commit), and
+The archive contains ARCHIVE_MANIFEST.sha256, or the name given with --manifest-name (SHA-256 of every
+file, plus the source commit), and
 the script writes <out>.sha256 and <out>.manifest.sha256 next to the archive.
 
 Both modes report, without changing anything:
@@ -36,7 +39,7 @@ from pathlib import Path
 
 ROOT = Path.cwd()
 LIST = ROOT / "release/archive_allowlist.txt"
-NEVER = ("data/raw/", ".venv", "__pycache__", ".kitbak", ".pyc", ".DS_Store")
+NEVER = ("data/raw/", ".venv", "__pycache__", ".kitbak", ".pyc", ".DS_Store", ".campaign.lock")
 _USER = re.escape(os.path.basename(os.path.expanduser("~")).encode() or b"~")
 LOCAL = re.compile(rb"/home/[A-Za-z0-9_.-]+|/mnt/c/|[A-Z]:\\\\Users|" + _USER)   # absolute paths or the local user name
 SECRET = re.compile(rb"(?i)(BEGIN [A-Z ]*PRIVATE KEY|aws_secret|api[_-]?key\s*[:=]\s*['\"][A-Za-z0-9]{16}|ghp_[A-Za-z0-9]{30}|password\s*[:=]\s*['\"][^'\"]{4})")
@@ -71,13 +74,13 @@ def git_files():
     return tracked, dirty, head
 
 
-def select(include_splits):
+def select(include_splits, listfile=LIST):
     all_files = []
     for d, dirs, files in os.walk(ROOT):
         dirs[:] = [x for x in dirs if x != ".git" and not x.startswith(".venv") and x != "__pycache__"]
         all_files += [Path(d, f).relative_to(ROOT).as_posix() for f in files]
     plan, missing = {}, []
-    for raw in LIST.read_text().splitlines():
+    for raw in listfile.read_text().splitlines():
         line = raw.split("#", 1)[0].strip()
         if not line:
             continue
@@ -120,6 +123,40 @@ def scan(path):
     return h.hexdigest(), local, secret, dataset_cols >= 5
 
 
+def feature_rows(path):
+    """True if the file holds feature VALUES: a CSV/TSV header with >= 5 UNSW-NB15 feature columns, or a
+    JSON-lines record with >= 5 UNSW-NB15 feature names as keys. Lists of feature names (schemas in
+    manifests) are not rows. Used for the refusal; the broader report of scan() is unchanged."""
+    p = str(path)
+    try:
+        with open(path, "rb") as fh:
+            first = fh.readline(1 << 20)
+    except OSError:
+        return False
+    names = {c.decode() for c in UNSW}
+    if p.endswith((".csv", ".tsv")):
+        cols = {c.strip().strip('"').lower() for c in re.split(r"[,\t]", first.decode(errors="replace"))}
+        return len(cols & names) >= 5
+    if p.endswith(".jsonl"):
+        import json
+        try:
+            rec = json.loads(first)
+        except ValueError:
+            return False
+        keys = set()
+        def walk(o, depth=0):
+            if depth > 4: return
+            if isinstance(o, dict):
+                for k, v in o.items():
+                    if isinstance(v, (int, float)) and not isinstance(v, bool): keys.add(str(k).lower())
+                    walk(v, depth + 1)
+            elif isinstance(o, list):
+                for v in o[:5]: walk(v, depth + 1)
+        walk(rec)
+        return len(keys & names) >= 5
+    return False
+
+
 def human(n):
     for u in ("B", "KB", "MB", "GB"):
         if n < 1024 or u == "GB":
@@ -133,9 +170,11 @@ def main():
     g.add_argument("--list", action="store_true", help="inspect and report; write nothing")
     g.add_argument("--out", help="archive to write (.tar.gz)")
     ap.add_argument("--include-splits", action="store_true", help="also archive data/splits/ (UNSW-NB15 rows)")
+    ap.add_argument("--allowlist", default=str(LIST.relative_to(ROOT)), help="selection file (default: %(default)s)")
+    ap.add_argument("--manifest-name", default="ARCHIVE_MANIFEST.sha256", help="manifest file name inside the archive")
     a = ap.parse_args()
 
-    plan, missing = select(a.include_splits)
+    plan, missing = select(a.include_splits, ROOT / a.allowlist)
     tracked, dirty, head = git_files()
     rows, groups = [], defaultdict(lambda: [0, 0])
     local_files, secret_files, data_files, uncommitted = [], [], [], []
@@ -163,19 +202,24 @@ def main():
     print(f"\ncontain an absolute local path or the local user name (kept byte for byte): {len(local_files)}")
     for f in local_files[:25]: print(f"  {f}")
     if len(local_files) > 25: print(f"  ... and {len(local_files) - 25} more")
-    print(f"\ncarry UNSW-NB15 feature columns (redistribute dataset rows): {len(data_files)}")
+    print(f"\nmention UNSW-NB15 feature names (review; lists of names in manifests are expected): {len(data_files)}")
     for f in data_files[:25]: print(f"  {f}")
     if len(data_files) > 25: print(f"  ... and {len(data_files) - 25} more")
     print(f"\nsecret-like strings: {len(secret_files)}")
     for f in secret_files: print(f"  {f}")
 
-    manifest = f"# RolloutSecBench evidence archive; source commit {head}\n" + "".join(
+    label = "" if a.allowlist == str(LIST.relative_to(ROOT)) else f" ({Path(a.allowlist).name})"
+    manifest = f"# RolloutSecBench evidence archive{label}; source commit {head}\n" + "".join(
         f"{digest}  {dest}\n" for dest, src, size, digest in rows)
+    rows_outside_splits = [dest for dest, src, size, digest in rows
+                           if not src.startswith("data/splits/") and feature_rows(src)]
+    print(f"\nhold feature VALUES (CSV header or JSON-lines record; refuses the archive): {len(rows_outside_splits)}")
+    for f in rows_outside_splits[:25]: print(f"  {f}")
     if a.list:
         print("\n--list: nothing written")
-        return 1 if (missing or secret_files) else 0
-    if missing or secret_files:
-        sys.exit("REFUSING to write the archive: missing required files or secret-like strings (see above)")
+        return 1 if (missing or secret_files or rows_outside_splits) else 0
+    if missing or secret_files or rows_outside_splits:
+        sys.exit("REFUSING to write the archive: missing required files, secret-like strings or feature values (see above)")
 
     out = Path(a.out).resolve()
     if out.exists():
@@ -189,7 +233,7 @@ def main():
         return ti
 
     with tarfile.open(out, "w:gz", compresslevel=6, format=tarfile.PAX_FORMAT) as tar:
-        tar.add(mf, arcname="ARCHIVE_MANIFEST.sha256", filter=reset)
+        tar.add(mf, arcname=a.manifest_name, filter=reset)
         for dest, src, size, digest in rows:
             tar.add(src, arcname=dest, recursive=False, filter=reset)
     mf.unlink()
